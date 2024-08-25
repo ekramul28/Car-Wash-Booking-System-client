@@ -15,7 +15,7 @@ const Navbar = () => {
       <header className="my-auto h-28 grid items-center bg-[#161616]">
         <div className="px-4 sm:px-6 lg:px-8">
           <div className="flex h-16 items-center justify-between">
-            <div className="md:flex md:items-center md:gap-12">
+            <div className="md:flex md:items-center md:gap-12 w-40">
               <Link to="/">
                 <img
                   src="https://i.ibb.co/W0Cx1nT/ultimate-car-wash-logo-8-300x116.png"

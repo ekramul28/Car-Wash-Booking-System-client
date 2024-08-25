@@ -3,6 +3,14 @@
 @tailwind components;
 @tailwind utilities;
 
+.bg-image1 {
+  position: relative;
+  background-image: url("https://i.ibb.co/N1Pcgpf/kingston-car-spa-scotland-car-wash-home-header.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
 body {
   background: #000000;
 
