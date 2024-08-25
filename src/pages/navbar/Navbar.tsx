@@ -33,7 +33,7 @@ const Navbar = () => {
                         to={link.level}
                         className={({ isActive }) =>
                           `transition hover:text-gray-500/75 roboto-medium ${
-                            isActive ? " bg-red-800 py-6 px-8 text-white" : ""
+                            isActive ? " bg-[#BE123C] py-6 px-8 text-white" : ""
                           }`
                         }
                       >
