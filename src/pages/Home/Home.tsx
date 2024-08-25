@@ -1,4 +1,5 @@
 import Banner from "../Banner/Banner";
+import Testimonial from "../Tastimonial/Tastimonial";
 import WelcomeSection from "../welcomeSection/welcomeSection";
 
 const Home = () => {
@@ -6,6 +7,7 @@ const Home = () => {
     <div>
       <Banner />
       <WelcomeSection />
+      <Testimonial />
     </div>
   );
 };
