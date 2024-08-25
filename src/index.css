@@ -10,6 +10,13 @@
   background-position: center;
   background-repeat: no-repeat;
 }
+.bg-image2 {
+  position: relative;
+  background-image: url("https://i.ibb.co/5xZzdc2/Luxury-SUV-in-Modern-Garage.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
 
 body {
   background: #000000;
