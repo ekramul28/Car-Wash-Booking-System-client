@@ -11,7 +11,7 @@ const Navbar = () => {
   ];
 
   return (
-    <div>
+    <div className="fixed top-0 left-0 mx-auto z-50 w-full ">
       <header className="my-auto h-28 grid items-center bg-[#161616]">
         <div className="px-4 sm:px-6 lg:px-8">
           <div className="flex h-16 items-center justify-between">

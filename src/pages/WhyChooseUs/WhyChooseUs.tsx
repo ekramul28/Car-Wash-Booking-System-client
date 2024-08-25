@@ -9,7 +9,7 @@ const WhyChooseUs = () => {
             Why Choose Us
           </h1>
 
-          <div className="grid grid-cols-3 ">
+          <div className="grid md:grid-cols-3 ">
             <div>
               <h1 className="mt-4 text-xl font-bold text-[#BE123C] sm:text-xl/relaxed">
                 Expert Team
