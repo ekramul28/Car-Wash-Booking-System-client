@@ -1,7 +1,8 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import CarInput from "@/components/form/CarInput";
 import CarForm from "@/components/form/CarForm";
 import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import {
   FormControl,
   FormField,
@@ -10,6 +11,16 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { useState } from "react";
+import { useAppDispatch } from "@/redux/hooks";
+import imageUpload from "@/utils/ImageUp";
+import { verifyToken } from "@/utils/VeryfiedToken";
+import { setUser, TUser } from "@/redux/features/auth/authSlice";
+import { toast } from "sonner";
+import {
+  useCreateUserMutation,
+  useLoginMutation,
+} from "@/redux/features/auth/authApi";
 
 const Register = () => {
   const defaultValues = {
@@ -20,8 +31,47 @@ const Register = () => {
     image: null,
   };
 
-  const onSubmit = (data: any) => {
+  const [registerError, setRegisterError] = useState("");
+  const [createUser] = useCreateUserMutation();
+  const [loginUser] = useLoginMutation();
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+  const location = useLocation();
+  const onSubmit = async (data: any) => {
     console.log("Form Data:", data);
+    setRegisterError("");
+    const photoFile = data?.image;
+
+    try {
+      const image = await imageUpload(photoFile);
+      const imageUrl = image?.data?.url;
+      const createUserData = {
+        Name: data.full_name,
+        phoneNo: data.phoneNo,
+        email: data.email,
+        password: data.password,
+        imageUrl,
+      };
+      const userCreate = await createUser(createUserData);
+      console.log(userCreate);
+      if (userCreate?.error) {
+        setRegisterError((userCreate?.error as any).data.message);
+      }
+      if (userCreate?.data?.success) {
+        const email = data?.email;
+        const password = data?.password;
+        const result = await loginUser({ email, password }).unwrap();
+        if (result?.success) {
+          const user = verifyToken(result.data.accessToken) as TUser;
+          dispatch(setUser({ user: user, token: result.data.accessToken }));
+        }
+        toast.success("Register Successfully");
+        const redirectTo = location.state?.from || "/";
+        navigate(redirectTo, { replace: true });
+      }
+    } catch (error) {
+      setRegisterError((error as any).message);
+    }
   };
 
   return (
@@ -109,6 +159,9 @@ const Register = () => {
                 </Link>
                 .
               </p>
+              <div className="text-primary text-red-700 text-center mt-4">
+                {registerError}
+              </div>
             </div>
           </div>
           <div className="absolute w-32 h-32 bg-primary rounded-full bottom-0 right-0 transform translate-x-1/2 translate-y-1/2 z-[-1]"></div>

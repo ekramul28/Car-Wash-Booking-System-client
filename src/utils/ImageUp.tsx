@@ -9,7 +9,6 @@ const imageUpload = async (image: File) => {
       body: formData,
     }
   );
-  console.log(process.env);
   if (!response.ok) {
     throw new Error(`Failed to upload image: ${response.statusText}`);
   }
