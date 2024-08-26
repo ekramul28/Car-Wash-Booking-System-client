@@ -1,8 +1,8 @@
 import { Button } from "@/components/ui/button";
 import { Link, NavLink } from "react-router-dom";
 import { Drawer, DrawerTrigger, DrawerContent } from "@/components/ui/drawer";
-import { useAppSelector } from "@/redux/hooks";
-import { selectCurrentUser } from "@/redux/features/auth/authSlice";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import { logout, selectCurrentUser } from "@/redux/features/auth/authSlice";
 import ProfileDropdown from "../ProfileDropdown/ProfileDropdown";
 
 const Navbar = () => {
@@ -14,7 +14,11 @@ const Navbar = () => {
   ];
 
   const user = useAppSelector(selectCurrentUser);
+  const dispatch = useAppDispatch();
   console.log(user);
+  const handelLogout = () => {
+    dispatch(logout());
+  };
 
   return (
     <div className="fixed top-0 left-0 mx-auto z-50 w-full ">
