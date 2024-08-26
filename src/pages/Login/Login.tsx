@@ -1,6 +1,7 @@
 import CarInput from "@/components/form/CarInput";
 import CarForm from "@/components/form/CarForm";
 import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
 
 const Login = () => {
   const defaultValues = {
@@ -23,7 +24,7 @@ const Login = () => {
               alt="illustration"
               className="absolute top-[-14%] right-[-2px] w-[90%] -z-10 "
             />
-            <h1 className="text-2xl mb-3">LOGIN</h1>
+            <h1 className="text-3xl roboto-bold mb-3">LOGIN</h1>
 
             <div className="z-50">
               <CarForm onSubmit={onSubmit} defaultValues={defaultValues}>
@@ -48,10 +49,10 @@ const Login = () => {
             </div>
 
             <div className="flex justify-between opacity-60 mt-4">
-              <a href="" className="text-primary">
+              <Link to="/register" className="text-primary text-green-400">
                 REGISTER
-              </a>
-              <a href="" className="text-primary">
+              </Link>
+              <a href="" className="text-primary text-green-400">
                 FORGOT PASSWORD
               </a>
             </div>

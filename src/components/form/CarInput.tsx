@@ -35,7 +35,7 @@ const CarInput = ({
               id={name}
               disabled={disabled}
               placeholder={placeholder}
-              className={className}
+              className={`text-black ${className}`}
             />
           </FormControl>
           <FormMessage />
