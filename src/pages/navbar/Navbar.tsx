@@ -1,6 +1,9 @@
 import { Button } from "@/components/ui/button";
 import { Link, NavLink } from "react-router-dom";
 import { Drawer, DrawerTrigger, DrawerContent } from "@/components/ui/drawer";
+import { useAppSelector } from "@/redux/hooks";
+import { selectCurrentUser } from "@/redux/features/auth/authSlice";
+import ProfileDropdown from "../ProfileDropdown/ProfileDropdown";
 
 const Navbar = () => {
   const links = [
@@ -9,6 +12,9 @@ const Navbar = () => {
     { name: "Service", level: "/service" },
     { name: "Contact", level: "/contact" },
   ];
+
+  const user = useAppSelector(selectCurrentUser);
+  console.log(user);
 
   return (
     <div className="fixed top-0 left-0 mx-auto z-50 w-full ">
@@ -47,11 +53,39 @@ const Navbar = () => {
 
             <div className="flex items-center gap-4">
               <div className="sm:flex sm:gap-4">
-                <Link to="/login">
-                  <Button variant="secondary" className="text-black">
-                    Login
-                  </Button>
-                </Link>
+                {user ? (
+                  <div className="flex justify-center items-center">
+                    <ProfileDropdown
+                      image={user?.imageUrl}
+                      role={user?.role}
+                      handelLogout={handelLogout}
+                    />
+                  </div>
+                ) : (
+                  <Link to={"/login"}>
+                    <p className="md:font-medium md:text-sm font-normal text-white text-xs flex items-center md:gap-2">
+                      <Button variant="secondary" className="text-black">
+                        <svg
+                          className="md:h-6 md:w-6 h-4 w-4"
+                          data-slot="icon"
+                          fill="none"
+                          stroke-width="1.5"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                          xmlns="http://www.w3.org/2000/svg"
+                          aria-hidden="true"
+                        >
+                          <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z"
+                          ></path>
+                        </svg>
+                        Login
+                      </Button>
+                    </p>
+                  </Link>
+                )}
               </div>
 
               {/* Button to open Drawer */}
