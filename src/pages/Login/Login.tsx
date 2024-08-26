@@ -1,16 +1,43 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import CarInput from "@/components/form/CarInput";
 import CarForm from "@/components/form/CarForm";
 import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useLoginMutation } from "@/redux/features/auth/authApi";
+import { useAppDispatch } from "@/redux/hooks";
+import { verifyToken } from "@/utils/VeryfiedToken";
+import { setUser, TUser } from "@/redux/features/auth/authSlice";
+import { toast } from "sonner";
 
 const Login = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const dispatch = useAppDispatch();
+
+  const [login] = useLoginMutation();
   const defaultValues = {
     email: "",
     password: "",
   };
 
-  const onSubmit = (data: any) => {
+  const onSubmit = async (data: any) => {
     console.log(data);
+    try {
+      const userInfo = {
+        email: data.email,
+        password: data.password,
+      };
+      const res = await login(userInfo).unwrap();
+
+      const user = verifyToken(res.data.accessToken) as TUser;
+      dispatch(setUser({ user: user, token: res.data.accessToken }));
+      toast.success("Logged in");
+      const redirectTo = location.state?.from || "/";
+      navigate(redirectTo, { replace: true });
+    } catch (err) {
+      toast.error("Something went wrong");
+    }
   };
 
   return (
