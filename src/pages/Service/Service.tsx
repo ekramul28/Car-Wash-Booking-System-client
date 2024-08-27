@@ -1,4 +1,5 @@
 import FunctionalityComponent from "./Functionality/FunctionalityCom";
+import ProductCard from "./ServiceCard/ServiceCard";
 
 const Service = () => {
   return (
@@ -6,8 +7,13 @@ const Service = () => {
       <div className="grid-cols-1 border">
         <FunctionalityComponent />
       </div>
-      <div className="grid-col-3 text-white">
-        <h1>done</h1>
+      <div className="grid-col-3 text-white px-2">
+        <ProductCard
+          imageUrl="/path/to/image.jpg"
+          description="Awesome Product"
+          price="$99.99"
+          duration="30 days"
+        />
       </div>
     </div>
   );
