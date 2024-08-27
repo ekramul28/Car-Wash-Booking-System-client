@@ -46,16 +46,18 @@ const Register = () => {
       const image = await imageUpload(photoFile);
       const imageUrl = image?.data?.url;
       const createUserData = {
-        Name: data.full_name,
-        phoneNo: data.phoneNo,
+        name: data.full_name,
+        phone: data.phoneNo,
         email: data.email,
         password: data.password,
         imageUrl,
       };
+      console.log(createUserData);
       const userCreate = await createUser(createUserData);
       console.log(userCreate);
       if (userCreate?.error) {
-        setRegisterError((userCreate?.error as any).data.message);
+        setRegisterError((userCreate?.error as any)?.data?.message);
+        console.log(userCreate?.error);
       }
       if (userCreate?.data?.success) {
         const email = data?.email;
@@ -70,7 +72,8 @@ const Register = () => {
         navigate(redirectTo, { replace: true });
       }
     } catch (error) {
-      setRegisterError((error as any).message);
+      //  setRegisterError((error as any).message);
+      console.log(error);
     }
   };
 

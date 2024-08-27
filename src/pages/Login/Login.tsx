@@ -29,13 +29,14 @@ const Login = () => {
         password: data.password,
       };
       const res = await login(userInfo).unwrap();
-
+      console.log(res);
       const user = verifyToken(res.data.accessToken) as TUser;
       dispatch(setUser({ user: user, token: res.data.accessToken }));
       toast.success("Logged in");
       const redirectTo = location.state?.from || "/";
       navigate(redirectTo, { replace: true });
     } catch (err) {
+      console.log(err);
       toast.error("Something went wrong");
     }
   };
