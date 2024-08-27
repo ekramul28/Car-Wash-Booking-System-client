@@ -8,9 +8,9 @@ import ProfileDropdown from "../ProfileDropdown/ProfileDropdown";
 const Navbar = () => {
   const links = [
     { name: "Home", level: "/" },
-    { name: "About", level: "/about" },
     { name: "Service", level: "/service" },
     { name: "Contact", level: "/contact" },
+    { name: "About", level: "/about" },
   ];
 
   const user = useAppSelector(selectCurrentUser);

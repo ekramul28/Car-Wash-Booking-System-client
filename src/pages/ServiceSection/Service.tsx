@@ -2,7 +2,7 @@ import { services } from "@/assets/FackData/ServiceData";
 import { TService } from "@/types/ServiceType";
 import { Link } from "react-router-dom";
 
-const Service = () => {
+const ServiceSection = () => {
   return (
     <section className="bg-gray-900 text-white">
       <div className="mx-auto max-w-screen-xl px-4 py-8 sm:px-6 sm:py-12 lg:px-8 lg:py-16">
@@ -52,4 +52,4 @@ const Service = () => {
   );
 };
 
-export default Service;
+export default ServiceSection;

@@ -1,5 +1,5 @@
 import Banner from "../Banner/Banner";
-import Service from "../ServiceSection/Service";
+import ServiceSection from "../ServiceSection/Service";
 import Testimonial from "../Tastimonial/Tastimonial";
 import WelcomeSection from "../welcomeSection/welcomeSection";
 import WhyChooseUs from "../WhyChooseUs/WhyChooseUs";
@@ -10,7 +10,7 @@ const Home = () => {
       <Banner />
       <WelcomeSection />
       <Testimonial />
-      <Service />
+      <ServiceSection />
       <WhyChooseUs />
     </div>
   );
