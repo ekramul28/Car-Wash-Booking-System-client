@@ -11,6 +11,7 @@ import ServiceDetailsPage from "@/pages/Service/ServiceDetailsPage/ServiceDetail
 import { Dashboard } from "@/components/layout/DashboardLayout";
 import Booking from "@/pages/Dashboard/Booking/Booking";
 import { DashboardHome } from "@/pages/Dashboard/DashboardHome/DashboardHome";
+import AllUser from "@/pages/Dashboard/AllUser/AllUser";
 
 const routes = createBrowserRouter([
   {
@@ -27,10 +28,7 @@ const routes = createBrowserRouter([
         path: "service",
         element: <Service />,
       },
-      {
-        path: "service/:id",
-        element: <ServiceDetailsPage />,
-      },
+
       {
         path: "contact",
         element: <Contact />,
@@ -60,6 +58,10 @@ const routes = createBrowserRouter([
       {
         path: "booking",
         element: <Booking />,
+      },
+      {
+        path: "/allUser",
+        element: <AllUser />,
       },
     ],
   },
