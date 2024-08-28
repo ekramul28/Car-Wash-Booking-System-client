@@ -7,6 +7,7 @@ import Register from "@/pages/Register/Register";
 import Contact from "@/pages/Contact/Contact";
 import About from "@/pages/About/About";
 import Service from "@/pages/Service/Service";
+import ServiceDetailsPage from "@/pages/Service/ServiceDetailsPage/ServiceDetailsPage";
 
 const routes = createBrowserRouter([
   {
@@ -22,6 +23,10 @@ const routes = createBrowserRouter([
       {
         path: "service",
         element: <Service />,
+      },
+      {
+        path: "service/:id",
+        element: <ServiceDetailsPage />,
       },
       {
         path: "contact",

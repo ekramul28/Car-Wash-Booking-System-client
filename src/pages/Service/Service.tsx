@@ -5,6 +5,7 @@ import ProductCard from "./ServiceCard/ServiceCard";
 // types/ServiceType.ts
 export type TService = {
   id: number;
+  _id: string;
   image: string[];
   title: string;
   description: string;
@@ -34,7 +35,7 @@ const Service = () => {
         <FunctionalityComponent />
       </div>
       <div className="col-span-3 ">
-        <div className="grid md:grid-cols-3 gap-4 justify-center text-white px-2">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4 justify-center text-white px-2">
           {services?.map((service) => (
             <ProductCard key={service.id} {...service} />
           ))}
