@@ -8,6 +8,7 @@ import Contact from "@/pages/Contact/Contact";
 import About from "@/pages/About/About";
 import Service from "@/pages/Service/Service";
 import ServiceDetailsPage from "@/pages/Service/ServiceDetailsPage/ServiceDetailsPage";
+import { Dashboard } from "@/components/layout/DashboardLayout";
 
 const routes = createBrowserRouter([
   {
@@ -43,6 +44,16 @@ const routes = createBrowserRouter([
       {
         path: "register",
         element: <Register />,
+      },
+    ],
+  },
+  {
+    path: "/dashboard",
+    element: <Dashboard />,
+    children: [
+      {
+        path: "dashboard",
+        element: "ok",
       },
     ],
   },

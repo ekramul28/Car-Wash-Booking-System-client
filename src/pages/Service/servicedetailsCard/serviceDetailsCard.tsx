@@ -1,12 +1,12 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Calendar } from "@/components/ui/calendar";
 import { Button } from "@/components/ui/button";
 import {
   DialogContent,
   DialogHeader,
   DialogTitle,
-  DialogFooter,
 } from "@/components/ui/dialog";
+import { useGetSlotsQuery } from "@/redux/features/slots/slots";
 
 type TimeSlot = {
   time: string;
@@ -14,7 +14,7 @@ type TimeSlot = {
 };
 
 type ServiceDetails = {
-  id: string;
+  _id: string;
   title: string;
   description: string;
   price: number;
@@ -29,7 +29,12 @@ type ServiceDetailsCardProps = {
 const ServiceDetailsCardDialog: React.FC<ServiceDetailsCardProps> = ({
   serviceDetails,
 }) => {
-  const [selectedDate, setSelectedDate] = useState<Date>(new Date());
+  // slots data fetch
+  const userInfo = { serviceId: serviceDetails?._id };
+  const { data } = useGetSlotsQuery(userInfo);
+  console.log(data);
+
+  const [date, setDate] = useState<Date | undefined>(new Date());
   const [selectedSlot, setSelectedSlot] = useState<TimeSlot | null>(null);
 
   const handleSlotClick = (slot: TimeSlot) => {
@@ -43,9 +48,13 @@ const ServiceDetailsCardDialog: React.FC<ServiceDetailsCardProps> = ({
     if (selectedSlot) {
       console.log(
         "Booking service:",
+        "id",
+        serviceDetails._id,
         serviceDetails?.title,
         "at",
-        selectedSlot.time
+        selectedSlot.time,
+        "date",
+        date
       );
     }
   };
@@ -72,25 +81,28 @@ const ServiceDetailsCardDialog: React.FC<ServiceDetailsCardProps> = ({
         <div className=" ">
           <h3 className="font-medium text-lg  text-gray-700">Select a Date:</h3>
           <Calendar
-            selected={selectedDate}
-            onChange={(date) => setSelectedDate(date)}
-            className="mt-2"
+            mode="single"
+            selected={date}
+            onSelect={setDate}
+            className="rounded-md border"
           />
         </div>
 
         {/* Time slots with Flexbox */}
-        <div className="md:w-1/2 p-2">
+        <div className="md:w-1/2 px-2">
           <h3 className="font-medium text-lg text-gray-700">
             Available Time Slots:
           </h3>
-          <div className="flex flex-wrap gap-2 mt-2 max-h-40 ">
+          <div className="flex flex-wrap gap-2  max-h-40 ">
             {availableTimeSlots.map((slot) => (
               <button
                 key={slot.time}
                 className={`p-2 flex-1 text-sm rounded-md transition duration-300 ${
                   slot.isBooked
                     ? "bg-gray-300 text-gray-500 cursor-not-allowed"
-                    : "bg-green-500 text-white hover:bg-green-600"
+                    : selectedSlot?.time === slot.time
+                    ? "bg-red-500 text-white"
+                    : "bg-black text-white hover:bg-gray-700"
                 }`}
                 disabled={slot.isBooked}
                 onClick={() => handleSlotClick(slot)}
@@ -104,7 +116,7 @@ const ServiceDetailsCardDialog: React.FC<ServiceDetailsCardProps> = ({
       {/* Book This Service button */}
       {selectedSlot && (
         <Button
-          className="bg-blue-500 text-white px-6 py-2 rounded-full hover:bg-blue-600 transition duration-300 mt-6 md:10 lg:mt-20"
+          className="bg-black text-white px-6 py-2 rounded-full hover:bg-gray-600 transition duration-300 mt-6 md:10 lg:mt-20"
           onClick={handleBooking}
         >
           Book This Service
