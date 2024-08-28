@@ -1,35 +1,27 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { TService } from "../Service";
 
-interface ProductCardProps {
-  imageUrl: string;
-  description: string;
-  price: string;
-  duration: string;
-}
-
-const ProductCard: React.FC<ProductCardProps> = ({
-  imageUrl,
-  description,
-  price,
-  duration,
-}) => {
+const ProductCard: React.FC<TService> = ({ image, title, price, duration }) => {
+  console.log(price);
   return (
-    <Card className="max-w-sm">
+    <Card className="max-w-sm bg-[#1C1F26] text-white">
       <CardHeader>
         <img
-          src={imageUrl}
+          src={image[0]}
           alt="Product Image"
           width={400}
           height={300}
           className="rounded-md"
         />
-        <CardTitle>{description}</CardTitle>
+        <CardTitle>{title}</CardTitle>
       </CardHeader>
       <CardContent className="flex flex-col space-y-2">
-        <div className="text-lg font-bold text-gray-800">Price: {price}</div>
-        <div className="text-sm text-gray-600">Duration: {duration}</div>
-        <Button>Add to Cart</Button>
+        <div className="text-lg font-bold ">Price: ${price}</div>
+        <div className="text-sm ">Duration: {duration} Min</div>
+        <Button variant={"outline"} className="text-black">
+          Book Now
+        </Button>
       </CardContent>
     </Card>
   );
