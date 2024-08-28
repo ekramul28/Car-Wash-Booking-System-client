@@ -9,6 +9,8 @@ import About from "@/pages/About/About";
 import Service from "@/pages/Service/Service";
 import ServiceDetailsPage from "@/pages/Service/ServiceDetailsPage/ServiceDetailsPage";
 import { Dashboard } from "@/components/layout/DashboardLayout";
+import Booking from "@/pages/Dashboard/Booking/Booking";
+import { DashboardHome } from "@/pages/Dashboard/DashboardHome/DashboardHome";
 
 const routes = createBrowserRouter([
   {
@@ -48,12 +50,16 @@ const routes = createBrowserRouter([
     ],
   },
   {
-    path: "/dashboard",
+    path: "/",
     element: <Dashboard />,
     children: [
       {
         path: "dashboard",
-        element: "ok",
+        element: <DashboardHome />,
+      },
+      {
+        path: "booking",
+        element: <Booking />,
       },
     ],
   },
