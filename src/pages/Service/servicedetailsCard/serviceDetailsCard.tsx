@@ -6,10 +6,15 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { useGetSlotsQuery } from "@/redux/features/slots/slots";
+import {
+  useBookingSlotsMutation,
+  useGetSlotsQuery,
+  useUpdateSlotsMutation,
+} from "@/redux/features/slots/slots";
 import { useAppSelector } from "@/redux/hooks";
 import { selectCurrentUser } from "@/redux/features/auth/authSlice";
 import { TSlot, TSlotData } from "@/types/ServiceType";
+import { toast } from "sonner";
 
 type TimeSlot = {
   time: string;
@@ -33,25 +38,23 @@ const ServiceDetailsCardDialog: React.FC<ServiceDetailsCardProps> = ({
   serviceDetails,
 }) => {
   const user = useAppSelector(selectCurrentUser);
+  const [bookingSlots] = useBookingSlotsMutation();
+  const [updateSlots] = useUpdateSlotsMutation();
 
-  const todayDate = new Date();
-  const formattedDate = todayDate.toISOString().slice(0, 10); // Extracts the first 10 characters (YYYY-MM-DD)
+  const [date, setDate] = useState<Date | undefined>(new Date());
+  const [selectedSlot, setSelectedSlot] = useState<TSlotData | null>(null);
+
+  const formattedDate = date?.toISOString().slice(0, 10);
   console.log(formattedDate);
+  console.log({ formattedDate });
   const userInfo = { serviceId: serviceDetails?._id, date: formattedDate };
-  console.log(userInfo);
 
   // slots data fetch
   const { data } = useGetSlotsQuery(userInfo);
   const slotTime = data?.data;
 
-  const [date, setDate] = useState<Date | undefined>(new Date());
-  const [selectedSlot, setSelectedSlot] = useState<TSlotData | null>(null);
-  console.log(selectedSlot);
-
   //handleSlot
   const handleSlotClick = (slot: TSlot) => {
-    console.log("ok");
-    console.log("ok", slot);
     if (slot.isBooked === "available") {
       const slotData: TSlotData = {
         date: slot.date,
@@ -67,15 +70,27 @@ const ServiceDetailsCardDialog: React.FC<ServiceDetailsCardProps> = ({
   };
 
   // Function to handle booking
-  const handleBooking = () => {
+  const handleBooking = async () => {
     if (selectedSlot) {
+      const result = await bookingSlots(selectedSlot).unwrap();
+      if (result.success) {
+        const updateData = {
+          id: selectedSlot.slotId,
+          dataUp: { isBooked: "booked" },
+        };
+        const update = await updateSlots(updateData);
+        console.log("dataUp", update);
+        toast.success("Booking successfully");
+      }
+      console.log(result);
+
       console.log(
         "Booking service:",
         "id",
         serviceDetails._id,
         serviceDetails?.title,
         "at",
-        selectedSlot.time,
+        `${selectedSlot.startTime} - ${selectedSlot.endTime}`,
         "date",
         date
       );
@@ -90,7 +105,7 @@ const ServiceDetailsCardDialog: React.FC<ServiceDetailsCardProps> = ({
       <div className="md:flex justify-center items-center">
         {/* Calendar for date selection */}
         <div className=" ">
-          <h3 className="font-medium text-lg  text-gray-700">Select a Date:</h3>
+          <h3 className="font-medium text-lg text-gray-700">Select a Date:</h3>
           <Calendar
             mode="single"
             selected={date}
@@ -104,36 +119,42 @@ const ServiceDetailsCardDialog: React.FC<ServiceDetailsCardProps> = ({
           <h3 className="font-medium text-lg text-gray-700">
             Available Time Slots:
           </h3>
-          <div className="flex flex-wrap gap-2  max-h-40 ">
-            {slotTime?.map((slot: TSlot) => (
-              <button
-                onClick={() => handleSlotClick(slot)}
-                key={slot._id}
-                className={`p-2 flex-1 text-sm rounded-md transition duration-300 ${
-                  slot.isBooked === "booked"
-                    ? "bg-gray-300 text-gray-500 cursor-not-allowed"
-                    : selectedSlot?.time ===
-                      `${slot?.startTime}-${slot?.endTime}`
-                    ? "bg-red-500 text-white"
-                    : "bg-black text-white hover:bg-gray-700"
-                }`}
-                disabled={slot.isBooked === "booked"}
-              >
-                {slot?.startTime}-{slot?.endTime}
-              </button>
-            ))}
+          <div className="flex flex-wrap gap-2 max-h-40">
+            {slotTime && slotTime.length > 0 ? (
+              slotTime.map((slot: TSlot) => (
+                <button
+                  onClick={() => handleSlotClick(slot)}
+                  key={slot._id}
+                  className={`p-2 flex-1 text-sm rounded-md transition duration-300 ${
+                    slot.isBooked === "booked"
+                      ? "bg-gray-300 text-gray-500 cursor-not-allowed"
+                      : selectedSlot?.startTime === slot.startTime &&
+                        selectedSlot?.endTime === slot.endTime
+                      ? "bg-red-500 text-white"
+                      : "bg-black text-white hover:bg-gray-700"
+                  }`}
+                  disabled={slot.isBooked === "booked"}
+                >
+                  {slot.startTime}-{slot.endTime}
+                </button>
+              ))
+            ) : (
+              <p className="text-gray-500">No slot created</p>
+            )}
           </div>
         </div>
       </div>
       {/* Book This Service button */}
-      {selectedSlot && (
-        <Button
-          className="bg-black text-white px-6 py-2 rounded-full hover:bg-gray-600 transition duration-300 mt-6 md:10 lg:mt-20"
-          onClick={handleBooking}
-        >
-          Book This Service
-        </Button>
-      )}
+      <div>
+        {selectedSlot && (
+          <Button
+            className="bg-black text-white px-6 py-2 rounded-full hover:bg-gray-600 transition duration-300 mt-6 md:10 "
+            onClick={handleBooking}
+          >
+            Book This Service
+          </Button>
+        )}
+      </div>
     </DialogContent>
   );
 };

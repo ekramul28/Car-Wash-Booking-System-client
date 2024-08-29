@@ -4,6 +4,9 @@ import { Drawer, DrawerTrigger, DrawerContent } from "@/components/ui/drawer";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { logout, selectCurrentUser } from "@/redux/features/auth/authSlice";
 import ProfileDropdown from "../ProfileDropdown/ProfileDropdown";
+import { BookImageIcon, ShoppingCart } from "lucide-react";
+import { Sheet, SheetTrigger } from "@/components/ui/sheet";
+import { CartSheet } from "../CardSheet/CardSheet";
 
 const Navbar = () => {
   const links = [
@@ -56,6 +59,20 @@ const Navbar = () => {
             </div>
 
             <div className="flex items-center gap-4">
+              <div className="relative flex justify-center items-center">
+                {/* Badge to show the number 5 */}
+                <div className="absolute -top-3 right-0 bg-red-500 text-white rounded-full text-xs w-4 h-4 flex items-center justify-center">
+                  5
+                </div>
+                {/* Shopping Cart Icon */}
+                <Sheet>
+                  <SheetTrigger asChild>
+                    <ShoppingCart className="h-5 w-5 text-white" />
+                    {/* <Button variant="outline">Open</Button> */}
+                  </SheetTrigger>
+                  <CartSheet />
+                </Sheet>
+              </div>
               <div className="sm:flex sm:gap-4">
                 {user ? (
                   <div className="flex justify-center items-center">
