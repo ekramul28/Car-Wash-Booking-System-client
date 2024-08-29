@@ -51,7 +51,7 @@ const routes = createBrowserRouter([
   {
     path: "/",
     element: (
-      <ProtectedRoute role="user">
+      <ProtectedRoute role="admin">
         <Dashboard />
       </ProtectedRoute>
     ),

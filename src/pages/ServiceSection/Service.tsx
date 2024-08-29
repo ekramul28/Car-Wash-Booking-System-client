@@ -1,5 +1,5 @@
 import { services } from "@/assets/FackData/ServiceData";
-import { TService } from "@/types/ServiceType";
+import { TServiceData } from "@/types/ServiceType";
 import { Link } from "react-router-dom";
 
 const ServiceSection = () => {
@@ -20,7 +20,7 @@ const ServiceSection = () => {
         </div>
 
         <div className="mt-8 grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
-          {services.map((service: TService, index: number) => (
+          {services.map((service: TServiceData, index: number) => (
             <Link
               key={index}
               className="block rounded-xl border border-gray-800 p-8 shadow-xl transition hover:border-pink-500/10 hover:shadow-pink-500/10"

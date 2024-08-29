@@ -7,6 +7,9 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { useGetSlotsQuery } from "@/redux/features/slots/slots";
+import { useAppSelector } from "@/redux/hooks";
+import { selectCurrentUser } from "@/redux/features/auth/authSlice";
+import { TSlot, TSlotData } from "@/types/ServiceType";
 
 type TimeSlot = {
   time: string;
@@ -29,17 +32,37 @@ type ServiceDetailsCardProps = {
 const ServiceDetailsCardDialog: React.FC<ServiceDetailsCardProps> = ({
   serviceDetails,
 }) => {
+  const user = useAppSelector(selectCurrentUser);
+
+  const todayDate = new Date();
+  const formattedDate = todayDate.toISOString().slice(0, 10); // Extracts the first 10 characters (YYYY-MM-DD)
+  console.log(formattedDate);
+  const userInfo = { serviceId: serviceDetails?._id, date: formattedDate };
+  console.log(userInfo);
+
   // slots data fetch
-  const userInfo = { serviceId: serviceDetails?._id };
   const { data } = useGetSlotsQuery(userInfo);
-  console.log(data);
+  const slotTime = data?.data;
 
   const [date, setDate] = useState<Date | undefined>(new Date());
-  const [selectedSlot, setSelectedSlot] = useState<TimeSlot | null>(null);
+  const [selectedSlot, setSelectedSlot] = useState<TSlotData | null>(null);
+  console.log(selectedSlot);
 
-  const handleSlotClick = (slot: TimeSlot) => {
-    if (!slot.isBooked) {
-      setSelectedSlot(slot);
+  //handleSlot
+  const handleSlotClick = (slot: TSlot) => {
+    console.log("ok");
+    console.log("ok", slot);
+    if (slot.isBooked === "available") {
+      const slotData: TSlotData = {
+        date: slot.date,
+        startTime: slot.startTime,
+        endTime: slot.endTime,
+        serviceId: slot.service._id,
+        slotId: slot._id,
+        userId: user?.userId,
+      };
+
+      setSelectedSlot(slotData);
     }
   };
 
@@ -58,18 +81,6 @@ const ServiceDetailsCardDialog: React.FC<ServiceDetailsCardProps> = ({
       );
     }
   };
-
-  const availableTimeSlots: TimeSlot[] = [
-    { time: "09:00 AM", isBooked: false },
-    { time: "10:00 AM", isBooked: true }, // Booked slot
-    { time: "11:00 AM", isBooked: false },
-    { time: "12:00 PM", isBooked: true }, // Booked slot
-    { time: "01:00 PM", isBooked: false },
-    { time: "02:00 PM", isBooked: false },
-    { time: "03:00 PM", isBooked: true }, // Booked slot
-    { time: "04:00 PM", isBooked: false },
-    { time: "05:00 PM", isBooked: false },
-  ];
 
   return (
     <DialogContent className="w-[90%] h-[90%] overflow-y-auto overflow-x-hidden">
@@ -94,20 +105,21 @@ const ServiceDetailsCardDialog: React.FC<ServiceDetailsCardProps> = ({
             Available Time Slots:
           </h3>
           <div className="flex flex-wrap gap-2  max-h-40 ">
-            {availableTimeSlots.map((slot) => (
+            {slotTime?.map((slot: TSlot) => (
               <button
-                key={slot.time}
+                onClick={() => handleSlotClick(slot)}
+                key={slot._id}
                 className={`p-2 flex-1 text-sm rounded-md transition duration-300 ${
-                  slot.isBooked
+                  slot.isBooked === "booked"
                     ? "bg-gray-300 text-gray-500 cursor-not-allowed"
-                    : selectedSlot?.time === slot.time
+                    : selectedSlot?.time ===
+                      `${slot?.startTime}-${slot?.endTime}`
                     ? "bg-red-500 text-white"
                     : "bg-black text-white hover:bg-gray-700"
                 }`}
-                disabled={slot.isBooked}
-                onClick={() => handleSlotClick(slot)}
+                disabled={slot.isBooked === "booked"}
               >
-                {slot.time}
+                {slot?.startTime}-{slot?.endTime}
               </button>
             ))}
           </div>

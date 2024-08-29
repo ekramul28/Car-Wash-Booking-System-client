@@ -1,6 +1,6 @@
-import { TService } from "@/types/ServiceType";
+import { TServiceData } from "@/types/ServiceType";
 
-export const services: TService[] = [
+export const services: TServiceData[] = [
   {
     id: 1,
     icon: (
