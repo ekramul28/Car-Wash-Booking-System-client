@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import {
   Tooltip,
@@ -16,9 +17,11 @@ import {
   Users2,
 } from "lucide-react";
 import { Link } from "react-router-dom";
+import DashboardHeader from "../DashboardHeader/DashboardHeader";
 const Sidebar = () => {
   return (
     <div>
+      <DashboardHeader />
       <aside className="fixed inset-y-0 left-0 z-10 hidden w-14 flex-col border-r bg-background sm:flex">
         <nav className="flex flex-col items-center gap-4 px-2 sm:py-5">
           <Link
@@ -55,7 +58,7 @@ const Sidebar = () => {
           <Tooltip>
             <TooltipTrigger asChild>
               <Link
-                to="/booking"
+                to="/dashboard/booking"
                 className="flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8"
               >
                 <Package className="h-5 w-5" />
@@ -67,7 +70,7 @@ const Sidebar = () => {
           <Tooltip>
             <TooltipTrigger asChild>
               <Link
-                to="/allUser"
+                to="/dashboard/allUser"
                 className="flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8"
               >
                 <Users2 className="h-5 w-5" />
@@ -128,7 +131,7 @@ const Sidebar = () => {
               Dashboard
             </Link>
             <Link
-              to="/booking"
+              to="/dashboard/booking"
               className="flex items-center gap-4 px-2.5 text-foreground"
             >
               <ShoppingCart className="h-5 w-5" />
@@ -142,11 +145,11 @@ const Sidebar = () => {
               Products
             </Link>
             <Link
-              to="#"
+              to="/dashboard/allUser"
               className="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
             >
               <Users2 className="h-5 w-5" />
-              Customers
+              AllUser
             </Link>
             <Link
               to="#"

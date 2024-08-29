@@ -12,6 +12,7 @@ import { Dashboard } from "@/components/layout/DashboardLayout";
 import Booking from "@/pages/Dashboard/Booking/Booking";
 import { DashboardHome } from "@/pages/Dashboard/DashboardHome/DashboardHome";
 import AllUser from "@/pages/Dashboard/AllUser/AllUser";
+import ProtectedRoute from "@/components/layout/ProtectedRoute";
 
 const routes = createBrowserRouter([
   {
@@ -49,18 +50,22 @@ const routes = createBrowserRouter([
   },
   {
     path: "/",
-    element: <Dashboard />,
+    element: (
+      <ProtectedRoute role="user">
+        <Dashboard />
+      </ProtectedRoute>
+    ),
     children: [
       {
         path: "dashboard",
         element: <DashboardHome />,
       },
       {
-        path: "booking",
+        path: "dashboard/booking",
         element: <Booking />,
       },
       {
-        path: "/allUser",
+        path: "dashboard/allUser",
         element: <AllUser />,
       },
     ],
