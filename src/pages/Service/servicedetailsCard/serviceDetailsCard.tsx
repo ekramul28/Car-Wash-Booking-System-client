@@ -15,6 +15,7 @@ import { useAppSelector } from "@/redux/hooks";
 import { selectCurrentUser } from "@/redux/features/auth/authSlice";
 import { TSlot, TSlotData } from "@/types/ServiceType";
 import { toast } from "sonner";
+import { useNavigate } from "react-router-dom";
 
 type TimeSlot = {
   time: string;
@@ -37,6 +38,8 @@ type ServiceDetailsCardProps = {
 const ServiceDetailsCardDialog: React.FC<ServiceDetailsCardProps> = ({
   serviceDetails,
 }) => {
+  const navigate = useNavigate();
+
   const user = useAppSelector(selectCurrentUser);
   const [bookingSlots] = useBookingSlotsMutation();
   const [updateSlots] = useUpdateSlotsMutation();
@@ -79,21 +82,13 @@ const ServiceDetailsCardDialog: React.FC<ServiceDetailsCardProps> = ({
           dataUp: { isBooked: "booked" },
         };
         const update = await updateSlots(updateData);
+        if (update?.success) {
+          console.log("success");
+          navigate("/service");
+        }
         console.log("dataUp", update);
         toast.success("Booking successfully");
       }
-      console.log(result);
-
-      console.log(
-        "Booking service:",
-        "id",
-        serviceDetails._id,
-        serviceDetails?.title,
-        "at",
-        `${selectedSlot.startTime} - ${selectedSlot.endTime}`,
-        "date",
-        date
-      );
     }
   };
 

@@ -7,6 +7,7 @@ import ProfileDropdown from "../ProfileDropdown/ProfileDropdown";
 import { BookImageIcon, ShoppingCart } from "lucide-react";
 import { Sheet, SheetTrigger } from "@/components/ui/sheet";
 import { CartSheet } from "../CardSheet/CardSheet";
+import { useGetMyBookingQuery } from "@/redux/features/booking/booking";
 
 const Navbar = () => {
   const links = [
@@ -22,6 +23,9 @@ const Navbar = () => {
   const handelLogout = () => {
     dispatch(logout());
   };
+
+  const { data } = useGetMyBookingQuery(undefined);
+  const bookings = data?.data;
 
   return (
     <div className="fixed top-0 left-0 mx-auto z-50 w-full ">
@@ -40,7 +44,7 @@ const Navbar = () => {
             <div className="hidden md:block">
               <nav aria-label="Global">
                 <ul className="flex items-center gap-6 text-xl text-white">
-                  {links.map((link, index) => (
+                  {links?.map((link, index) => (
                     <li key={index}>
                       <NavLink
                         to={link.level}
@@ -61,16 +65,20 @@ const Navbar = () => {
             <div className="flex items-center gap-4">
               <div className="relative flex justify-center items-center">
                 {/* Badge to show the number 5 */}
-                <div className="absolute -top-3 right-0 bg-red-500 text-white rounded-full text-xs w-4 h-4 flex items-center justify-center">
-                  5
-                </div>
+                {bookings?.length > 0 ? (
+                  <div className="absolute -top-3 right-0 bg-red-500 text-white rounded-full text-xs w-4 h-4 flex items-center justify-center">
+                    {bookings?.length}
+                  </div>
+                ) : (
+                  ""
+                )}
                 {/* Shopping Cart Icon */}
                 <Sheet>
                   <SheetTrigger asChild>
                     <ShoppingCart className="h-5 w-5 text-white" />
                     {/* <Button variant="outline">Open</Button> */}
                   </SheetTrigger>
-                  <CartSheet />
+                  <CartSheet bookings={bookings} />
                 </Sheet>
               </div>
               <div className="sm:flex sm:gap-4">

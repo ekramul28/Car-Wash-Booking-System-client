@@ -14,6 +14,7 @@ const SlotsApi = baseApi.injectEndpoints({
         method: "POST",
         body: userInfo,
       }),
+      invalidatesTags: ["booking"],
     }),
     updateSlots: builder.mutation({
       query: (userInfo) => ({
