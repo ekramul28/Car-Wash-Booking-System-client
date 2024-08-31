@@ -56,7 +56,6 @@ const Login = () => {
       const redirectTo = location.state?.from || "/";
       navigate(redirectTo, { replace: true });
     } catch (error) {
-      console.log(err);
       toast.error("Something went wrong");
     }
   };
@@ -75,7 +74,6 @@ const Login = () => {
       const redirectTo = location.state?.from || "/";
       navigate(redirectTo, { replace: true });
     } catch (error) {
-      console.log(err);
       toast.error("Something went wrong");
     }
   };

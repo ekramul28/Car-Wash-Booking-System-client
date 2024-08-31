@@ -16,8 +16,7 @@ export type TService = {
 
 const Service = () => {
   const { data, isLoading, isError } = useGetServiceQuery(undefined);
-  const services: TService[] = data?.data || [];
-  console.log(services);
+  const services: TService[] = data?.data?.result || [];
   if (isLoading) {
     return <div className="text-center text-white  pt-10">Loading...</div>;
   }
