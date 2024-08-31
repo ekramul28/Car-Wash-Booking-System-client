@@ -24,6 +24,8 @@ import { cn } from "@/lib/utils";
 import { CalendarIcon } from "lucide-react";
 import { Calendar } from "@/components/ui/calendar";
 import { useState } from "react";
+import { useCreateSlotsMutation } from "@/redux/features/slots/slots";
+import { toast } from "sonner";
 
 const ProductCard: React.FC<TService> = ({
   image,
@@ -37,7 +39,9 @@ const ProductCard: React.FC<TService> = ({
   const [startTime, setStartTime] = useState<string>("");
   const [endTime, setEndTime] = useState<string>("");
 
-  const handleSubmit = () => {
+  const [createSlots] = useCreateSlotsMutation();
+
+  const handleSubmit = async () => {
     const date: Date | undefined = stateDate;
 
     const formattedDate = date ? format(date, "yyyy-MM-dd") : "";
@@ -48,6 +52,10 @@ const ProductCard: React.FC<TService> = ({
       startTime,
       endTime,
     };
+    const result = await createSlots(slotData).unwrap();
+    if (result?.success) {
+      toast.success("slot Create SuccessFull");
+    }
     console.log(slotData);
   };
 

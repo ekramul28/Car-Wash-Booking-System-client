@@ -8,6 +8,13 @@ const SlotsApi = baseApi.injectEndpoints({
         method: "GET",
       }),
     }),
+    createSlots: builder.mutation({
+      query: (userInfo) => ({
+        url: `services/slots`,
+        method: "POST",
+        body: userInfo,
+      }),
+    }),
     bookingSlots: builder.mutation({
       query: (userInfo) => ({
         url: `/bookings`,
@@ -28,6 +35,7 @@ const SlotsApi = baseApi.injectEndpoints({
 
 export const {
   useGetSlotsQuery,
+  useCreateSlotsMutation,
   useBookingSlotsMutation,
   useUpdateSlotsMutation,
 } = SlotsApi;
