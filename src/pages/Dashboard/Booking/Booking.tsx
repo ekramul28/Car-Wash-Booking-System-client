@@ -445,13 +445,13 @@ const Booking = () => {
                     <div className="flex items-center justify-between">
                       <dt className="text-muted-foreground">Email</dt>
                       <dd>
-                        <a to="mailto:">liam@acme.com</a>
+                        <p>liam@acme.com</p>
                       </dd>
                     </div>
                     <div className="flex items-center justify-between">
                       <dt className="text-muted-foreground">Phone</dt>
                       <dd>
-                        <a to="tel:">+1 234 567 890</a>
+                        <p>+1 234 567 890</p>
                       </dd>
                     </div>
                   </dl>

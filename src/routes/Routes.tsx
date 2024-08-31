@@ -7,7 +7,6 @@ import Register from "@/pages/Register/Register";
 import Contact from "@/pages/Contact/Contact";
 import About from "@/pages/About/About";
 import Service from "@/pages/Service/Service";
-import ServiceDetailsPage from "@/pages/Service/ServiceDetailsPage/ServiceDetailsPage";
 import { Dashboard } from "@/components/layout/DashboardLayout";
 import Booking from "@/pages/Dashboard/Booking/Booking";
 import { DashboardHome } from "@/pages/Dashboard/DashboardHome/DashboardHome";
@@ -18,7 +17,7 @@ const routes = createBrowserRouter([
   {
     path: "/",
     element: <MainLayout />,
-    // errorElement: <ErrorPage />,
+    errorElement: <ErrorPage />,
 
     children: [
       {

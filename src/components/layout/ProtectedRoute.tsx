@@ -9,26 +9,28 @@ type TProtectedRoute = {
   role: string | undefined;
 };
 
-const ProtectedRoute = ({ children, role }: TProtectedRoute) => {
+const ProtectedRoute = ({ children, role }: TProtectedRoute): JSX.Element => {
   const token = useAppSelector(useCurrentToken);
-  console.log(token);
+  const dispatch = useAppDispatch();
+
   let user;
 
   if (token) {
-    user = verifyToken(token);
+    try {
+      user = verifyToken(token);
+    } catch (error) {
+      console.error("Invalid token:", error);
+      dispatch(logout());
+      return <Navigate to="/login" replace />;
+    }
   }
-  console.log(token);
-  const dispatch = useAppDispatch();
 
-  if (role !== undefined && role !== user?.role) {
+  if (!token || (role && user?.role !== role)) {
     dispatch(logout());
-    return <Navigate to="/login" replace={true} />;
-  }
-  if (!token) {
-    return <Navigate to="/login" replace={true} />;
+    return <Navigate to="/login" replace />;
   }
 
-  return children;
+  return <>{children}</>;
 };
 
 export default ProtectedRoute;

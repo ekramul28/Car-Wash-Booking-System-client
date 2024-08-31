@@ -25,7 +25,6 @@ const ProfileDropdown = ({
         <img
           src={image}
           alt="Profile Image"
-          layout="responsive"
           width={40}
           height={40}
           className="w-full h-full object-cover object-center"

@@ -16,7 +16,7 @@ export function CartSheet({
   userId,
 }: {
   bookings: TBooking[];
-  userId: string;
+  userId: string | undefined;
 }) {
   const [payment, { isLoading }] = usePaymentMutation();
 
