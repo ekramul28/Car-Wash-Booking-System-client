@@ -19,7 +19,6 @@ const Navbar = () => {
 
   const user = useAppSelector(selectCurrentUser);
   const dispatch = useAppDispatch();
-  console.log(user);
   const handelLogout = () => {
     dispatch(logout());
   };
@@ -73,12 +72,16 @@ const Navbar = () => {
                   ""
                 )}
                 {/* Shopping Cart Icon */}
-                <Sheet>
-                  <SheetTrigger asChild>
-                    <ShoppingCart className="h-5 w-5 text-white" />
-                  </SheetTrigger>
-                  <CartSheet bookings={bookings} userId={user?.userId} />
-                </Sheet>
+                {user?.role === "user" ? (
+                  <Sheet>
+                    <SheetTrigger asChild>
+                      <ShoppingCart className="h-5 w-5 text-white" />
+                    </SheetTrigger>
+                    <CartSheet bookings={bookings} userId={user?.userId} />
+                  </Sheet>
+                ) : (
+                  ""
+                )}
               </div>
               <div className="sm:flex sm:gap-4">
                 {user ? (

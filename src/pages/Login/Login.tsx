@@ -41,6 +41,45 @@ const Login = () => {
     }
   };
 
+  // demoAdmin
+  const demoAdmin = async () => {
+    try {
+      const data = {
+        email: "mdekramulhassan168@gmail.com",
+        password: "Ekramul28",
+      };
+      const res = await login(data).unwrap();
+      console.log(res);
+      const user = verifyToken(res.data.accessToken) as TUser;
+      dispatch(setUser({ user: user, token: res.data.accessToken }));
+      toast.success("Logged in");
+      const redirectTo = location.state?.from || "/";
+      navigate(redirectTo, { replace: true });
+    } catch (error) {
+      console.log(err);
+      toast.error("Something went wrong");
+    }
+  };
+  // demoUser
+  const demoUser = async () => {
+    try {
+      const data = {
+        email: "ekramulhassan80@gmail.com",
+        password: "Ekramul28",
+      };
+      const res = await login(data).unwrap();
+      console.log(res);
+      const user = verifyToken(res.data.accessToken) as TUser;
+      dispatch(setUser({ user: user, token: res.data.accessToken }));
+      toast.success("Logged in");
+      const redirectTo = location.state?.from || "/";
+      navigate(redirectTo, { replace: true });
+    } catch (error) {
+      console.log(err);
+      toast.error("Something went wrong");
+    }
+  };
+
   return (
     <div className="mt-40 text-white">
       <section className="flex justify-center items-center h-screen ">
@@ -83,6 +122,25 @@ const Login = () => {
               <a href="" className="text-primary text-green-400">
                 FORGOT PASSWORD
               </a>
+            </div>
+
+            <div className="flex justify-evenly">
+              <div>
+                <Button
+                  onClick={demoAdmin}
+                  className="inline-block w-full rounded-lg bg-white hover:bg-slate-300 font-medium text-black sm:w-auto"
+                >
+                  Demo Admin
+                </Button>
+              </div>
+              <div>
+                <Button
+                  onClick={demoUser}
+                  className="inline-block w-full rounded-lg bg-white hover:bg-slate-300 font-medium text-black sm:w-auto"
+                >
+                  Demo User
+                </Button>
+              </div>
             </div>
           </div>
           <div className="absolute w-32 h-32 bg-primary rounded-full bottom-0 right-0 transform translate-x-1/2 translate-y-1/2 z-[-1]"></div>

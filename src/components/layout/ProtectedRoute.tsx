@@ -24,7 +24,7 @@ const ProtectedRoute = ({ children, role }: TProtectedRoute): JSX.Element => {
       return <Navigate to="/login" replace />;
     }
   }
-
+  console.log(user);
   if (!token || (role && user?.role !== role)) {
     dispatch(logout());
     return <Navigate to="/login" replace />;
