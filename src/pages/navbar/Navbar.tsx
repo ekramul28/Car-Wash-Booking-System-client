@@ -4,7 +4,7 @@ import { Drawer, DrawerTrigger, DrawerContent } from "@/components/ui/drawer";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { logout, selectCurrentUser } from "@/redux/features/auth/authSlice";
 import ProfileDropdown from "../ProfileDropdown/ProfileDropdown";
-import { BookImageIcon, ShoppingCart } from "lucide-react";
+import { ShoppingCart } from "lucide-react";
 import { Sheet, SheetTrigger } from "@/components/ui/sheet";
 import { CartSheet } from "../CardSheet/CardSheet";
 import { useGetMyBookingQuery } from "@/redux/features/booking/booking";
@@ -76,9 +76,8 @@ const Navbar = () => {
                 <Sheet>
                   <SheetTrigger asChild>
                     <ShoppingCart className="h-5 w-5 text-white" />
-                    {/* <Button variant="outline">Open</Button> */}
                   </SheetTrigger>
-                  <CartSheet bookings={bookings} />
+                  <CartSheet bookings={bookings} userId={user?.userId} />
                 </Sheet>
               </div>
               <div className="sm:flex sm:gap-4">

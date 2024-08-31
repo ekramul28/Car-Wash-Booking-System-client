@@ -6,23 +6,59 @@ import {
   SheetHeader,
   SheetTitle,
 } from "@/components/ui/sheet";
+import { usePaymentMutation } from "@/redux/features/payment/paymentApi";
+import { TBooking } from "@/types/ServiceType";
+import { loadStripe } from "@stripe/stripe-js";
+import { toast } from "sonner";
 
-export function CartSheet({ bookings }) {
+export function CartSheet({
+  bookings,
+  userId,
+}: {
+  bookings: TBooking[];
+  userId: string;
+}) {
+  const [payment, { isLoading }] = usePaymentMutation();
+
+  const handelMakePayment = async () => {
+    const stripe = await loadStripe(
+      "pk_test_51OEnEtL2pc8251OJIpKkvcI0a5dYheFy8fPTEUoGZcKf5ivh3KFiM2V2G7uP0ks4pIL9oViusE7QFpW76DP4I85100LbdwsY0M"
+    );
+
+    const session = await payment({ id: userId });
+
+    if (bookings.length === 0) {
+      toast.error("No Booking quantity ");
+      return;
+    }
+
+    console.log(session);
+    console.log(session?.data.data.id);
+    if (stripe) {
+      const result = stripe.redirectToCheckout({
+        sessionId: session?.data.data.id,
+      });
+      console.log(result);
+    } else {
+      console.error("Stripe is not initialized.");
+    }
+  };
+
   return (
     <SheetContent>
       <SheetHeader>
-        <SheetTitle>Edit profile</SheetTitle>
+        <SheetTitle>Edit Booking</SheetTitle>
         <SheetDescription>
           Make changes to your profile here. Click save when you're done.
         </SheetDescription>
       </SheetHeader>
 
-      <Card>
-        <div className="relative  max-w-sm border border-gray-600 bg-gray-100 px-4 py-8 sm:px-6 lg:px-8">
+      <Card className="overflow-auto h-[80vh]">
+        <div className="relative  max-w-sm border  bg-gray-100 px-4 py-8 sm:px-6 lg:px-8">
           <div className="mt-4 space-y-6">
-            <ul className="space-y-4">
+            <ul className="space-y-4 ">
               {bookings?.map((booking) => (
-                <li key={booking._id} className="flex items-center gap-4">
+                <li key={booking._id} className="flex items-center gap-4 ">
                   <img
                     src={booking?.serviceId?.image[0]}
                     alt="image"
@@ -81,15 +117,12 @@ export function CartSheet({ bookings }) {
             </ul>
 
             <div className="space-y-4 text-center ">
-              <Button className="px-5 py-3 lock rounded w-[80%] text-center text-sm text-gray-100 transition hover:bg-gray-600">
-                Checkout
-              </Button>
-              <a
-                href="#"
-                className="inline-block text-sm text-gray-500 underline underline-offset-4 transition hover:text-gray-600"
+              <Button
+                onClick={handelMakePayment}
+                className="px-5 py-3 lock rounded w-[80%] text-center text-sm text-gray-100 transition hover:bg-gray-600"
               >
-                Continue shopping
-              </a>
+                {isLoading ? "Loading..." : "Pay Now"}
+              </Button>
             </div>
           </div>
         </div>

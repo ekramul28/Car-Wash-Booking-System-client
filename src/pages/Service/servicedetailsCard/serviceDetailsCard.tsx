@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Calendar } from "@/components/ui/calendar";
 import { Button } from "@/components/ui/button";
 import {
+  DialogClose,
   DialogContent,
   DialogHeader,
   DialogTitle,
@@ -15,7 +16,6 @@ import { useAppSelector } from "@/redux/hooks";
 import { selectCurrentUser } from "@/redux/features/auth/authSlice";
 import { TSlot, TSlotData } from "@/types/ServiceType";
 import { toast } from "sonner";
-import { useNavigate } from "react-router-dom";
 
 type TimeSlot = {
   time: string;
@@ -38,10 +38,8 @@ type ServiceDetailsCardProps = {
 const ServiceDetailsCardDialog: React.FC<ServiceDetailsCardProps> = ({
   serviceDetails,
 }) => {
-  const navigate = useNavigate();
-
   const user = useAppSelector(selectCurrentUser);
-  const [bookingSlots] = useBookingSlotsMutation();
+  const [bookingSlots, { isLoading }] = useBookingSlotsMutation();
   const [updateSlots] = useUpdateSlotsMutation();
 
   const [date, setDate] = useState<Date | undefined>(new Date());
@@ -82,14 +80,14 @@ const ServiceDetailsCardDialog: React.FC<ServiceDetailsCardProps> = ({
           dataUp: { isBooked: "booked" },
         };
         const update = await updateSlots(updateData);
-        if (update?.success) {
-          console.log("success");
-          navigate("/service");
+        if (update.data.success) {
+          toast.success("Booking successful");
         }
-        console.log("dataUp", update);
-        toast.success("Booking successfully");
       }
     }
+    setTimeout(() => {
+      document.getElementById("dialog-close-btn")?.click();
+    }, 100);
   };
 
   return (
@@ -142,12 +140,18 @@ const ServiceDetailsCardDialog: React.FC<ServiceDetailsCardProps> = ({
       {/* Book This Service button */}
       <div>
         {selectedSlot && (
-          <Button
-            className="bg-black text-white px-6 py-2 rounded-full hover:bg-gray-600 transition duration-300 mt-6 md:10 "
-            onClick={handleBooking}
-          >
-            Book This Service
-          </Button>
+          <>
+            <Button
+              className="bg-black text-white px-6 py-2 rounded-full hover:bg-gray-600 transition duration-300 mt-6 md:10 "
+              onClick={handleBooking}
+            >
+              {isLoading ? "Booking...." : "Book This Service"}
+            </Button>
+            {/* Hidden DialogClose button */}
+            <DialogClose asChild>
+              <button id="dialog-close-btn" className="hidden"></button>
+            </DialogClose>
+          </>
         )}
       </div>
     </DialogContent>

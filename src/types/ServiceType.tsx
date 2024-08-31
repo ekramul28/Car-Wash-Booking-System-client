@@ -1,4 +1,5 @@
 import { TService } from "@/pages/Service/Service";
+import { TUser } from "@/redux/features/auth/authSlice";
 
 export type TServiceData = {
   id: number;
@@ -25,4 +26,17 @@ export type TSlotData = {
   serviceId: string;
   slotId: string;
   userId?: string;
+};
+
+export type TBooking = {
+  _id: string;
+  userId: TUser;
+  serviceId: TService;
+  slotId: TSlot;
+  date: string;
+  startTime: string;
+  endTime: string;
+  isDeleted: boolean;
+  createdAt: string;
+  updatedAt: string;
 };
