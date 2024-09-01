@@ -33,6 +33,7 @@ const CarInput = ({
               {...field}
               type={type}
               id={name}
+              required
               disabled={disabled}
               placeholder={placeholder}
               className={`text-black ${className}`}

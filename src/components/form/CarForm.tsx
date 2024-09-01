@@ -12,6 +12,7 @@ type TFormConfig = UseFormProps<FieldValues>;
 type TFormProps = {
   onSubmit: SubmitHandler<FieldValues>;
   children: ReactNode;
+  className?: string;
 } & TFormConfig;
 
 const CarForm = ({
@@ -19,6 +20,7 @@ const CarForm = ({
   onSubmit,
   defaultValues,
   resolver,
+  className,
 }: TFormProps) => {
   const methods = useForm({
     defaultValues,
@@ -32,7 +34,9 @@ const CarForm = ({
 
   return (
     <FormProvider {...methods}>
-      <form onSubmit={methods.handleSubmit(submit)}>{children}</form>
+      <form onSubmit={methods.handleSubmit(submit)} className={`${className}`}>
+        {children}
+      </form>
     </FormProvider>
   );
 };

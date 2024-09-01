@@ -40,3 +40,20 @@ export type TBooking = {
   createdAt: string;
   updatedAt: string;
 };
+
+export type TService = {
+  id: number;
+  _id: string;
+  image: string[];
+  title: string;
+  description: string;
+  price: string;
+  duration: string;
+  isDeleted: boolean;
+};
+export type TMeta = {
+  page: number;
+  limit: number;
+  total: number;
+  totalPage: number;
+};

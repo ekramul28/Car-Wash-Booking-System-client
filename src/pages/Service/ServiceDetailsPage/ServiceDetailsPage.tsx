@@ -1,7 +1,7 @@
 import ServiceDetailsCard from "../servicedetailsCard/serviceDetailsCard";
 import { useGetSingleServiceQuery } from "@/redux/features/service/serviceApi";
 
-const ServiceDetailsPage = ({ id }: { id: string }) => {
+const ServiceDetailsPage = ({ id, role }: { id: string; role: string }) => {
   // const { id } = useParams();
   console.log(id);
   const { data } = useGetSingleServiceQuery(id);
@@ -10,7 +10,7 @@ const ServiceDetailsPage = ({ id }: { id: string }) => {
 
   return (
     <div>
-      <ServiceDetailsCard serviceDetails={service} />
+      <ServiceDetailsCard serviceDetails={service} role={role} />
     </div>
   );
 };

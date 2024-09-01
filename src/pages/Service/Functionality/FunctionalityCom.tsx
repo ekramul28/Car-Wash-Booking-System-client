@@ -1,5 +1,7 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import CarForm from "@/components/form/CarForm";
+import CarInput from "@/components/form/CarInput";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import {
   Select,
@@ -8,41 +10,62 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { ChangeEvent, useState } from "react";
 
-const FunctionalityComponent: React.FC = () => {
-  const [searchTerm, setSearchTerm] = useState<string>("");
-  const [selectedFilter, setSelectedFilter] = useState<string>("");
-  const [sortOrder, setSortOrder] = useState<string>("");
-
-  const handleSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setSearchTerm(e.target.value);
+// Define the props type
+interface FunctionalityComponentProps {
+  setSearch: React.Dispatch<
+    React.SetStateAction<{ name: string; value: string | undefined }>
+  >;
+  setFilter: React.Dispatch<
+    React.SetStateAction<{ name: string; value: string | undefined }>
+  >;
+  setSort: React.Dispatch<
+    React.SetStateAction<{ name: string; value: string | undefined }>
+  >;
+}
+const FunctionalityComponent: React.FC<FunctionalityComponentProps> = ({
+  setSearch,
+  setFilter,
+  setSort,
+}) => {
+  const handleSearchChange = (data: any) => {
+    console.log(data);
+    setSearch((prev) => ({ ...prev, value: data?.search }));
   };
 
   const handleFilterChange = (value: string) => {
-    setSelectedFilter(value);
+    setFilter((prev) => ({ ...prev, value }));
   };
 
   const handleSortChange = (value: string) => {
-    setSortOrder(value);
+    setSort((prev) => ({ ...prev, value }));
   };
-
-  const handleApply = () => {
-    console.log("Search:", searchTerm);
-    console.log("Filter:", selectedFilter);
-    console.log("Sort:", sortOrder);
+  const handleAllData = () => {
+    setSearch((prev) => ({ ...prev, value: undefined }));
+    setFilter((prev) => ({ ...prev, value: undefined }));
+    setSort((prev) => ({ ...prev, value: undefined }));
   };
-
   return (
     <div className="flex flex-col space-y-4 p-4">
-      <div>
-        <Label htmlFor="search">Search</Label>
-        <Input
-          id="search"
-          placeholder="Search..."
-          value={searchTerm}
-          onChange={handleSearchChange}
-        />
+      <div className="">
+        <CarForm
+          onSubmit={handleSearchChange}
+          className="flex space-x-2 items-center "
+        >
+          <CarInput
+            type="text"
+            label="Search"
+            name="search"
+            placeholder="Search..."
+            // className="flex-grow" // Allows the input to take up available space
+          />
+          <Button
+            className="text-black bg-white mt-8 hover:bg-slate-100"
+            type="submit"
+          >
+            Search
+          </Button>
+        </CarForm>
       </div>
 
       <div>
@@ -66,14 +89,18 @@ const FunctionalityComponent: React.FC = () => {
             <SelectValue placeholder="Select Sort Order" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="asc">Ascending</SelectItem>
-            <SelectItem value="desc">Descending</SelectItem>
+            <SelectItem value="price">Price</SelectItem>
+            <SelectItem value="updatedAt">New Product</SelectItem>
+            <SelectItem value="title">A-Z</SelectItem>
+            <SelectItem value="-rating">Rating</SelectItem>
           </SelectContent>
         </Select>
       </div>
-
-      <Button variant={"outline"} onClick={handleApply}>
-        Apply
+      <Button
+        onClick={handleAllData}
+        className="bg-white text-black hover:bg-slate-300"
+      >
+        All Data
       </Button>
     </div>
   );

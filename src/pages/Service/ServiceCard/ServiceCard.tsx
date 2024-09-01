@@ -78,7 +78,9 @@ const ProductCard: React.FC<TService> = ({
         {user?.role === "user" ? (
           <Dialog>
             <DialogTrigger>
-              <Button className="w-[80%] bg-white text-black">Book Now</Button>
+              <Button className="w-[80%] bg-white text-black hover:bg-slate-400">
+                Book Now
+              </Button>
             </DialogTrigger>
             <DialogContent>
               <ServiceDetailsPage id={_id} />
@@ -91,7 +93,10 @@ const ProductCard: React.FC<TService> = ({
           <div className="flex justify-evenly mt-2 items-center">
             <Dialog>
               <DialogTrigger asChild>
-                <Button variant="outline" className="text-black">
+                <Button
+                  variant="outline"
+                  className="text-black hover:bg-slate-400"
+                >
                   Create Slot
                 </Button>
               </DialogTrigger>
@@ -161,7 +166,19 @@ const ProductCard: React.FC<TService> = ({
                 </DialogFooter>
               </DialogContent>
             </Dialog>
-            <Button className="bg-white text-black">Edit</Button>
+            <Button className="bg-white text-black hover:bg-slate-400">
+              Edit
+            </Button>
+            <Dialog>
+              <DialogTrigger>
+                <Button className="w-[80%] bg-white text-black hover:bg-slate-400">
+                  See Slot
+                </Button>
+              </DialogTrigger>
+              <DialogContent>
+                <ServiceDetailsPage id={_id} />
+              </DialogContent>
+            </Dialog>
           </div>
         ) : (
           ""
