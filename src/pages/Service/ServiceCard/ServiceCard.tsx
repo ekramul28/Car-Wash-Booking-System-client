@@ -26,6 +26,7 @@ import { Calendar } from "@/components/ui/calendar";
 import { useState } from "react";
 import { useCreateSlotsMutation } from "@/redux/features/slots/slots";
 import { toast } from "sonner";
+import EditService from "../Editservice/EditService";
 
 const ProductCard: React.FC<TService> = ({
   image,
@@ -58,6 +59,8 @@ const ProductCard: React.FC<TService> = ({
     }
     console.log(slotData);
   };
+
+  const onSubmit = () => {};
 
   return (
     <Card className="max-w-sm bg-[#1C1F26] text-white">
@@ -166,9 +169,19 @@ const ProductCard: React.FC<TService> = ({
                 </DialogFooter>
               </DialogContent>
             </Dialog>
-            <Button className="bg-white text-black hover:bg-slate-400">
-              Edit
-            </Button>
+            <Dialog>
+              <DialogTrigger>
+                <Button className="w-[80%] bg-white text-black hover:bg-slate-400">
+                  Edit
+                </Button>
+              </DialogTrigger>
+              <DialogContent className="h-[80%] overflow-auto">
+                <EditService
+                  onSubmit={onSubmit}
+                  // defaultValues={defaultValues}
+                />
+              </DialogContent>
+            </Dialog>
             <Dialog>
               <DialogTrigger>
                 <Button className="w-[80%] bg-white text-black hover:bg-slate-400">
@@ -176,7 +189,7 @@ const ProductCard: React.FC<TService> = ({
                 </Button>
               </DialogTrigger>
               <DialogContent>
-                <ServiceDetailsPage id={_id} />
+                <ServiceDetailsPage id={_id} role={user?.role} />
               </DialogContent>
             </Dialog>
           </div>
