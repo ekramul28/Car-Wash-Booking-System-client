@@ -30,14 +30,7 @@ const ServiceApi = baseApi.injectEndpoints({
           params: params,
         };
       },
-      providesTags: ["booking"],
-    }),
-    getSingleService: builder.query({
-      query: (id) => ({
-        url: `/services/${id}`,
-        method: "GET",
-      }),
-      providesTags: ["booking"],
+      providesTags: ["service"],
     }),
 
     UpdateService: builder.mutation({
@@ -49,7 +42,27 @@ const ServiceApi = baseApi.injectEndpoints({
           body: userInfo.data,
         };
       },
-      invalidatesTags: ["service"],
+      invalidatesTags: ["services"],
+    }),
+    getSingleService: builder.query({
+      query: (id) => ({
+        url: `/services/${id}`,
+        method: "GET",
+      }),
+      providesTags: ["services"],
+      async onQueryStarted(userInfo, { dispatch, queryFulfilled }) {
+        try {
+          await queryFulfilled;
+          // Manually refetch the getSingleService query
+          dispatch(
+            ServiceApi.util.invalidateTags([
+              { type: "services", id: userInfo._id },
+            ])
+          );
+        } catch (err) {
+          console.error("Update failed", err);
+        }
+      },
     }),
   }),
 });

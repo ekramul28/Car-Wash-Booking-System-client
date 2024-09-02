@@ -15,11 +15,13 @@ interface ServiceFormProps {
     price?: string | 0;
     duration?: string | 0;
   };
+  UpdateLoading: boolean;
 }
 
 const EditService: React.FC<ServiceFormProps> = ({
   onSubmit,
   defaultValues,
+  UpdateLoading,
 }) => {
   const [message, setMessage] = useState(defaultValues?.description || "");
   const [imageInput, setImageInput] = useState<string>(
@@ -108,7 +110,7 @@ const EditService: React.FC<ServiceFormProps> = ({
 
         {/* Submit Button */}
         <Button type="submit" className="w-full">
-          Submit
+          {UpdateLoading ? "Loading..." : " Submit"}
         </Button>
       </CarForm>
     </Card>

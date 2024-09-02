@@ -50,9 +50,10 @@ const ProductCard: React.FC<TService> = ({
   const [startTime, setStartTime] = useState<string>("");
   const [endTime, setEndTime] = useState<string>("");
 
-  const [createSlots] = useCreateSlotsMutation();
+  const [createSlots, { isLoading }] = useCreateSlotsMutation();
 
-  const [UpdateService] = useUpdateServiceMutation();
+  const [UpdateService, { isLoading: UpdateLoading }] =
+    useUpdateServiceMutation();
 
   const handleSubmit = async () => {
     const date: Date | undefined = stateDate;
@@ -194,7 +195,7 @@ const ProductCard: React.FC<TService> = ({
                 </div>
                 <DialogFooter>
                   <Button onClick={handleSubmit} type="submit">
-                    Save changes
+                    {isLoading ? "Loading..." : " Create"}
                   </Button>
                 </DialogFooter>
               </DialogContent>
@@ -209,6 +210,7 @@ const ProductCard: React.FC<TService> = ({
                 <EditService
                   onSubmit={onSubmit}
                   defaultValues={defaultValues}
+                  UpdateLoading={UpdateLoading}
                 />
               </DialogContent>
             </Dialog>
