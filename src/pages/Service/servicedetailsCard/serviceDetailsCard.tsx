@@ -33,7 +33,7 @@ type ServiceDetails = {
 
 type ServiceDetailsCardProps = {
   serviceDetails: ServiceDetails;
-  role: string;
+  role: string | undefined;
 };
 
 const ServiceDetailsCardDialog: React.FC<ServiceDetailsCardProps> = ({

@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import CarForm from "@/components/form/CarForm";
 import CarInput from "@/components/form/CarInput";
 import { Textarea } from "@/components/ui/textarea";
+import { Card } from "@/components/ui/card";
 
 interface ServiceFormProps {
   onSubmit: (data: any) => void;
@@ -11,8 +12,8 @@ interface ServiceFormProps {
     image?: string[] | undefined;
     title?: string | undefined;
     description?: string | undefined;
-    price?: number | 0;
-    duration?: number | 0;
+    price?: string | 0;
+    duration?: string | 0;
   };
 }
 
@@ -38,71 +39,79 @@ const EditService: React.FC<ServiceFormProps> = ({
   };
 
   // Handle the change in the image input
-  const handleImageInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleImageInputChange = (
+    e: React.ChangeEvent<HTMLTextAreaElement>
+  ) => {
     setImageInput(e.target.value);
   };
   return (
-    <CarForm
-      onSubmit={handleFormSubmit}
-      defaultValues={defaultValues}
-      className="space-y-4"
-    >
-      {/* title Field */}
-      <div>
-        <CarInput type="text" name="title" label="Title" placeholder="Title" />
-      </div>
+    <Card className="w-[80%] mx-auto mt-4 p-6">
+      <CarForm
+        onSubmit={handleFormSubmit}
+        defaultValues={defaultValues}
+        className="space-y-4 "
+      >
+        {/* title Field */}
+        <div>
+          <CarInput
+            type="text"
+            name="title"
+            label="Title"
+            placeholder="Title"
+          />
+        </div>
 
-      {/* price Field */}
-      <div>
-        <CarInput
-          type="number"
-          name="price"
-          label="Price"
-          placeholder="Price"
-        />
-      </div>
+        {/* price Field */}
+        <div>
+          <CarInput
+            type="number"
+            name="price"
+            label="Price"
+            placeholder="Price"
+          />
+        </div>
 
-      {/* duration Field */}
-      <div>
-        <CarInput
-          type="number"
-          name="duration"
-          label="Duration (minutes)"
-          placeholder="Duration"
-        />
-      </div>
+        {/* duration Field */}
+        <div>
+          <CarInput
+            type="number"
+            name="duration"
+            label="Duration (minutes)"
+            placeholder="Duration"
+          />
+        </div>
 
-      {/* description Field */}
-      <div>
-        <label htmlFor="message">Description</label>
-        <Textarea
-          id="description"
-          name="description"
-          placeholder="Type your description here."
-          value={message}
-          onChange={handleTextareaChange}
-        />
-      </div>
+        {/* description Field */}
+        <div>
+          <label htmlFor="message">Description</label>
+          <Textarea
+            id="description"
+            name="description"
+            placeholder="Type your description here."
+            value={message}
+            onChange={handleTextareaChange}
+          />
+        </div>
 
-      {/* image Field */}
-      <div>
-        <label htmlFor="message">
-          Image URLs (comma-separated)Like <span> , </span>{" "}
-        </label>
-        <Textarea
-          type="text"
-          name="image"
-          placeholder="Image URLs"
-          value={imageInput}
-          onChange={handleImageInputChange}
-        />
-      </div>
+        {/* image Field */}
+        <div>
+          <label htmlFor="message">
+            Image URLs (comma-separated)Like <span> , </span>{" "}
+          </label>
+          <Textarea
+            name="image"
+            placeholder="Image URLs"
+            value={imageInput}
+            onChange={handleImageInputChange}
+          />
+        </div>
 
-      {/* Submit Button */}
-      <Button type="submit" className="w-full">
-        Submit
-      </Button>
-    </CarForm>
+        {/* Submit Button */}
+        <Button type="submit" className="w-full">
+          Submit
+        </Button>
+      </CarForm>
+    </Card>
   );
 };
 

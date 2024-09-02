@@ -1,4 +1,3 @@
-import { TService } from "@/pages/Service/Service";
 import { TUser } from "@/redux/features/auth/authSlice";
 
 export type TServiceData = {

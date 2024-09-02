@@ -39,9 +39,9 @@ const Service = () => {
       value: "",
     }
   );
-
+  console.log(filter);
   // Adjusted API call for better parameter passing
-  const { data, isLoading, isError } = useGetServiceQuery([
+  const { data, isError } = useGetServiceQuery([
     searchTerm,
     pagination,
     // filter, // Ensure the filter is included in the query
