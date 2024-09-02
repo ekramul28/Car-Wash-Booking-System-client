@@ -30,7 +30,7 @@ const Service = () => {
     name: string;
     value: string | undefined;
   }>({
-    name: "queryObj",
+    name: "title",
     value: "",
   });
   const [sort, setSort] = useState<{ name: string; value: string | undefined }>(
@@ -43,11 +43,11 @@ const Service = () => {
   // Adjusted API call for better parameter passing
   const { data, isError } = useGetServiceQuery([
     searchTerm,
+    // filter,
     pagination,
-    // filter, // Ensure the filter is included in the query
     sort,
   ]);
-
+  console.log(data);
   const services: TService[] = data?.data?.result || [];
   const meta: TMeta = data?.data?.meta;
 

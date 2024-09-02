@@ -12,8 +12,8 @@ import { toast } from "sonner";
 import { RootState } from "../store";
 
 const baseQuery = fetchBaseQuery({
-  // baseUrl: "http://localhost:5000/api/v1",
-  baseUrl: "https://car-wash-booking-system-server.vercel.app/api/v1",
+  baseUrl: "http://localhost:5000/api/v1",
+  // baseUrl: "https://car-wash-booking-system-server.vercel.app/api/v1",
   credentials: "include",
   prepareHeaders: (headers, { getState }) => {
     const token = (getState() as RootState).auth.token;

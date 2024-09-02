@@ -41,9 +41,9 @@ const FunctionalityComponent: React.FC<FunctionalityComponentProps> = ({
     setSort((prev) => ({ ...prev, value }));
   };
   const handleAllData = () => {
-    setSearch((prev) => ({ ...prev, value: undefined }));
+    setSearch((prev) => ({ ...prev, value: "" }));
     setFilter((prev) => ({ ...prev, value: undefined }));
-    setSort((prev) => ({ ...prev, value: undefined }));
+    setSort((prev) => ({ ...prev, value: "" }));
   };
   return (
     <div className="flex flex-col space-y-4 p-4">
@@ -67,7 +67,6 @@ const FunctionalityComponent: React.FC<FunctionalityComponentProps> = ({
           </Button>
         </CarForm>
       </div>
-
       <div>
         <Label htmlFor="filter">Filter</Label>
         <Select onValueChange={handleFilterChange}>
@@ -75,13 +74,15 @@ const FunctionalityComponent: React.FC<FunctionalityComponentProps> = ({
             <SelectValue placeholder="Select Filter" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="filter1">Filter 1</SelectItem>
-            <SelectItem value="filter2">Filter 2</SelectItem>
-            <SelectItem value="filter3">Filter 3</SelectItem>
+            <SelectItem value="Exterior Wash">Exterior Wash</SelectItem>
+            <SelectItem value="Interior Detailing">
+              Interior Cleaning
+            </SelectItem>
+            <SelectItem value="Tire Cleaning">Tire Cleaning</SelectItem>
+            <SelectItem value="full">Full Service</SelectItem>
           </SelectContent>
         </Select>
       </div>
-
       <div className="pb-6">
         <Label htmlFor="sort">Sort</Label>
         <Select onValueChange={handleSortChange}>
