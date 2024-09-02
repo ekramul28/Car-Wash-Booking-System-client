@@ -15,7 +15,7 @@ interface ServiceFormProps {
     price?: string | 0;
     duration?: string | 0;
   };
-  UpdateLoading: boolean;
+  UpdateLoading?: boolean;
 }
 
 const EditService: React.FC<ServiceFormProps> = ({

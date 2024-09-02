@@ -1,50 +1,97 @@
-# React + TypeScript + Vite
+# Car Wash Booking System
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Welcome to the Car Wash Booking System! This web application provides a streamlined experience for booking car wash services, managing services and slots, and overseeing user activity. The system caters to both end-users and administrators, ensuring a smooth operation for all parties involved.
 
-Currently, two official plugins are available:
+## 🚀 Live Demo
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+[Visit the Live Site](#) ([Replace with the actual URL](https://car-washing-booking-system-client.vercel.app/))
 
-## Expanding the ESLint configuration
+### Installation
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+1. **Clone the repository:**
 
-- Configure the top-level `parserOptions` property like this:
+   ```bash
+   git clone https://github.com/ekramul28/Car-Wash-Booking-System-client
+   cd car-wash-booking-system
+   ```
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+   npm start
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+# or
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+### Build for production:
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+yarn start
+
+npm run build
+
+# or
+
+yarn build
+
+## 📜 Features
+
+### Public Pages
+
+- **Home Page**
+
+  - Navigation Menu with links to key sections like Services, Booking, and Login.
+  - Hero/Branding Section to showcase the essence of the car wash service.
+  - Call-to-Action Button for quick booking.
+  - Featured Services section highlighting the most popular services.
+  - Review Section for user feedback and ratings, with dynamic content display.
+  - Footer with links to relevant pages and contact information.
+
+- **User Authentication Pages**
+
+  - **Sign Up:** Secure account creation with form validation.
+  - **Login:** Token-based authentication with error handling.
+
+- **Services Page**
+
+  - Comprehensive list of car wash services with search, filter, and sort functionalities.
+
+- **Service Details Page**
+
+  - Detailed information on selected services, with a booking slot selection feature.
+
+- **Booking Page**
+
+  - Displays selected service and time slot with user information form and payment processing.
+
+- **Error Pages**
+  - Custom 404 page with navigation options to guide users back to the main sections.
+
+### Admin Dashboard
+
+- **Service Management:** Add, update, and delete services with real-time updates.
+- **Slot Management:** Create and manage service slots, with status updates.
+- **User Management:** View and manage user roles and bookings.
+
+### User Dashboard
+
+- **Profile Management:** Update personal information and manage bookings.
+- **Booking History:** View past and upcoming bookings with countdown timers.
+
+### Bonus Features
+
+- **Service Comparison:** Compare services side by side.
+- **Scroll to Top Button:** Quickly return to the top of the page.
+- **Responsive Design:** Fully responsive across devices.
+- **UI/UX Improvements:** Enhanced user experience with modern design practices.
+
+## 🛠️ Technologies Used
+
+- **Frontend:** React, TypeScript, Tailwind CSS, shadcn/ui
+- **State Management:** Redux, RTK Query
+- **Routing:** React Router / Next.js
+- **Form Management:** React Hook Form
+- **Authentication:** JWT-based authentication
+- **Backend Integration:** RESTful APIs
+
+## 🔧 Setup and Installation
+
+### Prerequisites
+
+- Node.js (v14 or later)
+- npm or yarn
