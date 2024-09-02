@@ -4,7 +4,7 @@ Welcome to the Car Wash Booking System! This web application provides a streamli
 
 ## 🚀 Live Demo
 
-[Visit the Live Site](#) ([Replace with the actual URL](https://car-washing-booking-system-client.vercel.app/))
+[https://car-washing-booking-system-client.vercel.app/]
 
 ### Installation
 
