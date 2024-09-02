@@ -1,21 +1,18 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React from "react";
+import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Checkbox } from "@/components/ui/checkbox";
 import CarForm from "@/components/form/CarForm";
 import CarInput from "@/components/form/CarInput";
+import { Textarea } from "@/components/ui/textarea";
 
 interface ServiceFormProps {
   onSubmit: (data: any) => void;
   defaultValues?: {
-    _id?: string;
-    id?: string;
-    image?: string[];
-    title?: string;
-    description?: string;
-    price?: number;
-    duration?: number;
-    isDeleted?: boolean;
+    image?: string[] | undefined;
+    title?: string | undefined;
+    description?: string | undefined;
+    price?: number | 0;
+    duration?: number | 0;
   };
 }
 
@@ -23,50 +20,36 @@ const EditService: React.FC<ServiceFormProps> = ({
   onSubmit,
   defaultValues,
 }) => {
+  const [message, setMessage] = useState(defaultValues?.description || "");
+  const [imageInput, setImageInput] = useState<string>(
+    defaultValues?.image?.join("  , ") || "    "
+  );
+  const handleTextareaChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setMessage(e.target.value);
+  };
+
+  const handleFormSubmit = (data: any) => {
+    const formDataImg = {
+      ...defaultValues,
+      image: imageInput.split(",").map((url) => url.trim()), // Split and trim the input
+    };
+    console.log(formDataImg);
+    onSubmit({ ...data, message, formDataImg });
+  };
+
+  // Handle the change in the image input
+  const handleImageInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setImageInput(e.target.value);
+  };
   return (
     <CarForm
-      onSubmit={onSubmit}
+      onSubmit={handleFormSubmit}
       defaultValues={defaultValues}
       className="space-y-4"
     >
-      {/* _id Field */}
-      <div>
-        <CarInput type="text" name="_id" label="ID" placeholder="ID" disabled />
-      </div>
-
-      {/* id Field */}
-      <div>
-        <CarInput
-          type="text"
-          name="id"
-          label="Service ID"
-          placeholder="Service ID"
-        />
-      </div>
-
-      {/* image Field */}
-      <div>
-        <CarInput
-          type="text"
-          name="image"
-          label="Image URLs (comma-separated)"
-          placeholder="Image URLs"
-        />
-      </div>
-
       {/* title Field */}
       <div>
         <CarInput type="text" name="title" label="Title" placeholder="Title" />
-      </div>
-
-      {/* description Field */}
-      <div>
-        <CarInput
-          type="textarea"
-          name="description"
-          label="Description"
-          placeholder="Description"
-        />
       </div>
 
       {/* price Field */}
@@ -89,10 +72,30 @@ const EditService: React.FC<ServiceFormProps> = ({
         />
       </div>
 
-      {/* isDeleted Field */}
-      <div className="flex items-center space-x-2">
-        <Checkbox id="isDeleted" name="isDeleted" />
-        <label htmlFor="isDeleted">Is Deleted?</label>
+      {/* description Field */}
+      <div>
+        <label htmlFor="message">Description</label>
+        <Textarea
+          id="description"
+          name="description"
+          placeholder="Type your description here."
+          value={message}
+          onChange={handleTextareaChange}
+        />
+      </div>
+
+      {/* image Field */}
+      <div>
+        <label htmlFor="message">
+          Image URLs (comma-separated)Like <span> , </span>{" "}
+        </label>
+        <Textarea
+          type="text"
+          name="image"
+          placeholder="Image URLs"
+          value={imageInput}
+          onChange={handleImageInputChange}
+        />
       </div>
 
       {/* Submit Button */}

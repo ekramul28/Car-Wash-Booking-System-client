@@ -6,6 +6,15 @@ export type TQueryParam = {
 
 const ServiceApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
+    CreateService: builder.mutation({
+      query: (userInfo) => ({
+        url: "/services",
+        method: "POST",
+        body: userInfo,
+      }),
+
+      invalidatesTags: ["service"],
+    }),
     getService: builder.query({
       query: (args) => {
         const params = new URLSearchParams();
@@ -21,19 +30,26 @@ const ServiceApi = baseApi.injectEndpoints({
           params: params,
         };
       },
+      providesTags: ["booking"],
     }),
     getSingleService: builder.query({
       query: (id) => ({
         url: `/services/${id}`,
         method: "GET",
       }),
+      providesTags: ["booking"],
     }),
-    CreateService: builder.mutation({
-      query: (userInfo) => ({
-        url: "/services",
-        method: "POST",
-        body: userInfo,
-      }),
+
+    UpdateService: builder.mutation({
+      query: (userInfo) => {
+        console.log("api", userInfo);
+        return {
+          url: `/services/${userInfo._id}`,
+          method: "PUT",
+          body: userInfo.data,
+        };
+      },
+      invalidatesTags: ["service"],
     }),
   }),
 });
@@ -42,4 +58,5 @@ export const {
   useGetServiceQuery,
   useGetSingleServiceQuery,
   useCreateServiceMutation,
+  useUpdateServiceMutation,
 } = ServiceApi;

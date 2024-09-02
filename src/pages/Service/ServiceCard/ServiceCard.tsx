@@ -1,5 +1,4 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { TService } from "../Service";
 import {
   Dialog,
   DialogContent,
@@ -27,6 +26,8 @@ import { useState } from "react";
 import { useCreateSlotsMutation } from "@/redux/features/slots/slots";
 import { toast } from "sonner";
 import EditService from "../Editservice/EditService";
+import { TService } from "@/types/ServiceType";
+import { useUpdateServiceMutation } from "@/redux/features/service/serviceApi";
 
 const ProductCard: React.FC<TService> = ({
   image,
@@ -34,13 +35,24 @@ const ProductCard: React.FC<TService> = ({
   price,
   duration,
   _id,
+  description,
 }) => {
+  interface ServiceFormData {
+    title: string;
+    price: string;
+    duration: string;
+    image: string[];
+    message: string;
+    description: string;
+  }
   const user = useAppSelector(selectCurrentUser);
   const [stateDate, setDate] = useState<Date | undefined>(new Date());
   const [startTime, setStartTime] = useState<string>("");
   const [endTime, setEndTime] = useState<string>("");
 
   const [createSlots] = useCreateSlotsMutation();
+
+  const [UpdateService] = useUpdateServiceMutation();
 
   const handleSubmit = async () => {
     const date: Date | undefined = stateDate;
@@ -60,7 +72,25 @@ const ProductCard: React.FC<TService> = ({
     console.log(slotData);
   };
 
-  const onSubmit = () => {};
+  const onSubmit = async (data: ServiceFormData) => {
+    const updateData = {
+      data,
+      _id,
+    };
+    const result = await UpdateService(updateData).unwrap();
+    if (result?.success) {
+      toast.success("Edit Successfull");
+    }
+    console.log(updateData);
+  };
+
+  const defaultValues = {
+    image,
+    title,
+    price,
+    duration,
+    description,
+  };
 
   return (
     <Card className="max-w-sm bg-[#1C1F26] text-white">
@@ -178,7 +208,7 @@ const ProductCard: React.FC<TService> = ({
               <DialogContent className="h-[80%] overflow-auto">
                 <EditService
                   onSubmit={onSubmit}
-                  // defaultValues={defaultValues}
+                  defaultValues={defaultValues}
                 />
               </DialogContent>
             </Dialog>

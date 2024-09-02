@@ -86,23 +86,30 @@ const Service = () => {
           <Pagination className="text-black">
             <PaginationContent className="bg-white">
               <PaginationItem>
-                <PaginationPrevious
-                  onClick={() =>
-                    handlePageChange(Math.max(1, pagination.value - 1))
-                  }
-                  disabled={pagination.value === 1}
-                />
+                {pagination.value > 1 ? (
+                  <PaginationPrevious
+                    onClick={() =>
+                      handlePageChange(Math.max(1, pagination.value - 1))
+                    }
+                  />
+                ) : (
+                  <PaginationPrevious className="disabled">
+                    Previous
+                  </PaginationPrevious> // A visual indicator for disabled state
+                )}
               </PaginationItem>
+
               {[...Array(meta?.totalPage || 1)].map((_, index) => (
                 <PaginationItem key={index}>
                   <PaginationLink
                     onClick={() => handlePageChange(index + 1)}
-                    active={pagination.value === index + 1}
+                    isActive={pagination.value === index + 1} // Changed 'active' to 'isActive'
                   >
                     {index + 1}
                   </PaginationLink>
                 </PaginationItem>
               ))}
+
               <PaginationItem>
                 <PaginationNext
                   onClick={() =>
@@ -110,8 +117,12 @@ const Service = () => {
                       Math.min(meta?.totalPage || 1, pagination.value + 1)
                     )
                   }
-                  disabled={pagination.value === meta?.totalPage}
-                />
+                  className={`pagination-next ${
+                    pagination.value === meta?.totalPage ? "disabled" : ""
+                  }`}
+                >
+                  Next
+                </PaginationNext>
               </PaginationItem>
             </PaginationContent>
           </Pagination>
