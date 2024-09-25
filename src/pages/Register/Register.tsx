@@ -155,7 +155,7 @@ const Register = () => {
               </CarForm>
             </div>
             <div className="flex justify-between opacity-60 mt-4">
-              <p className="text-primary text-white">
+              <p className="text-primary text-white text-center">
                 Already have an account?{" "}
                 <Link to="/login">
                   <span className="underline cursor-pointer">Log in</span>

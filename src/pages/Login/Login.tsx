@@ -113,13 +113,13 @@ const Login = () => {
               </CarForm>
             </div>
 
-            <div className="flex justify-between opacity-60 mt-4">
-              <Link to="/register" className="text-primary text-green-400">
-                REGISTER
-              </Link>
-              <a href="" className="text-primary text-green-400">
-                FORGOT PASSWORD
-              </a>
+            <div className="text-center  my-4 ">
+              <span className="text-white">
+                Don't have Account
+                <Link to="/register" className="text-primary  text-red-600">
+                  REGISTER
+                </Link>
+              </span>
             </div>
 
             <div className="flex justify-evenly">

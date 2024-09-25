@@ -13,6 +13,7 @@ import { DashboardHome } from "@/pages/Dashboard/DashboardHome/DashboardHome";
 import AllUser from "@/pages/Dashboard/AllUser/AllUser";
 import ProtectedRoute from "@/components/layout/ProtectedRoute";
 import AddService from "@/pages/Dashboard/AddService/AddService";
+import DynamicDetailsPage from "@/pages/Service/DynamickDetailsPage/DynamickDetailsPage";
 
 const routes = createBrowserRouter([
   {
@@ -28,6 +29,10 @@ const routes = createBrowserRouter([
       {
         path: "service",
         element: <Service />,
+      },
+      {
+        path: "service/:id",
+        element: <DynamicDetailsPage />,
       },
 
       {

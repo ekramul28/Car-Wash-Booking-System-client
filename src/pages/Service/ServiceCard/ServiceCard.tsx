@@ -28,6 +28,7 @@ import { toast } from "sonner";
 import EditService from "../Editservice/EditService";
 import { TService } from "@/types/ServiceType";
 import { useUpdateServiceMutation } from "@/redux/features/service/serviceApi";
+import { Link, useNavigate } from "react-router-dom";
 
 const ProductCard: React.FC<TService> = ({
   image,
@@ -49,6 +50,8 @@ const ProductCard: React.FC<TService> = ({
   const [stateDate, setDate] = useState<Date | undefined>(new Date());
   const [startTime, setStartTime] = useState<string>("");
   const [endTime, setEndTime] = useState<string>("");
+
+  const navigate = useNavigate();
 
   const [createSlots, { isLoading }] = useCreateSlotsMutation();
 
@@ -93,36 +96,30 @@ const ProductCard: React.FC<TService> = ({
     description,
   };
 
+  const handelBooking = () => {
+    if (!user?.userId) {
+      navigate("/login", { state: { from: `/service/${_id}` } });
+    }
+  };
+
   return (
     <Card className="max-w-sm bg-[#1C1F26] text-white">
       <CardHeader>
-        <img
-          src={image[0]}
-          alt="Product Image"
-          width={400}
-          height={300}
-          className="rounded-md"
-        />
+        <div className="h-[200px]">
+          <img
+            src={image[0]}
+            alt="Product Image"
+            width={400}
+            height={200}
+            className="rounded-md"
+          />
+        </div>
         <CardTitle>{title}</CardTitle>
       </CardHeader>
       <CardContent className="flex flex-col space-y-2">
         <div className="text-lg font-bold">Price: ${price}</div>
         <div className="text-sm">Duration: {duration} Min</div>
 
-        {user?.role === "user" ? (
-          <Dialog>
-            <DialogTrigger>
-              <Button className="w-[80%] bg-white text-black hover:bg-slate-400">
-                Book Now
-              </Button>
-            </DialogTrigger>
-            <DialogContent>
-              <ServiceDetailsPage id={_id} />
-            </DialogContent>
-          </Dialog>
-        ) : (
-          ""
-        )}
         {user?.role === "admin" ? (
           <div className="flex justify-evenly mt-2 items-center">
             <Dialog>
@@ -226,7 +223,32 @@ const ProductCard: React.FC<TService> = ({
             </Dialog>
           </div>
         ) : (
-          ""
+          <div className="flex gap-3">
+            <Link to={`/service/${_id}`}>
+              <Button className="bg-white text-black hover:bg-slate-300">
+                See Details
+              </Button>
+            </Link>
+            {user?.userId ? (
+              <Dialog>
+                <DialogTrigger>
+                  <Button className="w-[80%] bg-white text-black hover:bg-slate-400">
+                    Book Now
+                  </Button>
+                </DialogTrigger>
+                <DialogContent>
+                  <ServiceDetailsPage id={_id} />
+                </DialogContent>
+              </Dialog>
+            ) : (
+              <Button
+                onClick={handelBooking}
+                className="w-[80%] bg-white text-black hover:bg-slate-400"
+              >
+                Book Now
+              </Button>
+            )}
+          </div>
         )}
       </CardContent>
     </Card>

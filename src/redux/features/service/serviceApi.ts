@@ -49,20 +49,6 @@ const ServiceApi = baseApi.injectEndpoints({
         url: `/services/${id}`,
         method: "GET",
       }),
-      providesTags: ["services"],
-      async onQueryStarted(userInfo, { dispatch, queryFulfilled }) {
-        try {
-          await queryFulfilled;
-          // Manually refetch the getSingleService query
-          dispatch(
-            ServiceApi.util.invalidateTags([
-              { type: "services", id: userInfo._id },
-            ])
-          );
-        } catch (err) {
-          console.error("Update failed", err);
-        }
-      },
     }),
   }),
 });
