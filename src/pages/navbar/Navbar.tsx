@@ -13,6 +13,7 @@ const Navbar = () => {
   const links = [
     { name: "Home", level: "/" },
     { name: "Service", level: "/service" },
+    { name: "Card", level: "/card" },
     { name: "Contact", level: "/contact" },
     { name: "About", level: "/about" },
   ];

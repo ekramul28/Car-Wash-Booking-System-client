@@ -14,6 +14,7 @@ import AllUser from "@/pages/Dashboard/AllUser/AllUser";
 import ProtectedRoute from "@/components/layout/ProtectedRoute";
 import AddService from "@/pages/Dashboard/AddService/AddService";
 import DynamicDetailsPage from "@/pages/Service/DynamickDetailsPage/DynamickDetailsPage";
+import Card from "@/pages/Card/Card";
 
 const routes = createBrowserRouter([
   {
@@ -29,6 +30,10 @@ const routes = createBrowserRouter([
       {
         path: "service",
         element: <Service />,
+      },
+      {
+        path: "card",
+        element: <Card />,
       },
       {
         path: "service/:id",
