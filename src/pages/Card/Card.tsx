@@ -24,7 +24,7 @@ const Card = () => {
           <CardPage bookings={bookings} />
         </div>
         <div className="md:w-2/3 mt-10">
-          <CardDetailsPage />
+          <CardDetailsPage bookings={bookings} />
         </div>
       </div>
     </>

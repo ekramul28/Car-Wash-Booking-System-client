@@ -6,6 +6,7 @@ import {
   SheetHeader,
   SheetTitle,
 } from "@/components/ui/sheet";
+import { useDeleteSingleMyBookingMutation } from "@/redux/features/booking/booking";
 import { usePaymentMutation } from "@/redux/features/payment/paymentApi";
 import { TBooking } from "@/types/ServiceType";
 import { loadStripe } from "@stripe/stripe-js";
@@ -19,6 +20,20 @@ export function CartSheet({
   userId: string | undefined;
 }) {
   const [payment, { isLoading }] = usePaymentMutation();
+  const [deleteSingleMyBooking] = useDeleteSingleMyBookingMutation();
+
+  // delete function
+
+  const handleDelete = async (id: string) => {
+    const result = await deleteSingleMyBooking(id).unwrap();
+    if (result.success) {
+      toast.success("Delete Successfully");
+    } else {
+      toast.error("something went wrong");
+    }
+  };
+
+  //payment function here
 
   const handelMakePayment = async () => {
     const stripe = await loadStripe(
@@ -93,7 +108,10 @@ export function CartSheet({
                   </div>
 
                   <div className="flex flex-1 items-center justify-end gap-2">
-                    <button className="text-gray-600 transition hover:text-red-600">
+                    <button
+                      onClick={() => handleDelete(booking._id)}
+                      className="text-gray-600 transition hover:text-red-600"
+                    >
                       <span className="sr-only">Remove item</span>
 
                       <svg

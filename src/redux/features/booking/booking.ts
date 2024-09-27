@@ -9,7 +9,15 @@ const Booking = baseApi.injectEndpoints({
       }),
       providesTags: ["booking"],
     }),
+    deleteSingleMyBooking: builder.mutation({
+      query: (id) => ({
+        url: `/my-bookings/${id}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["booking"],
+    }),
   }),
 });
 
-export const { useGetMyBookingQuery } = Booking;
+export const { useGetMyBookingQuery, useDeleteSingleMyBookingMutation } =
+  Booking;

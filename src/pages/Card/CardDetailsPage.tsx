@@ -1,8 +1,9 @@
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
+import { TBooking } from "@/types/ServiceType";
 
-const CardDetailsPage = () => {
+const CardDetailsPage = ({ bookings }: { bookings: TBooking[] }) => {
   return (
     <Card>
       <div className="mt-8 flex justify-center items-center border-t h-[400px] p-5 border-gray-100 pt-8">

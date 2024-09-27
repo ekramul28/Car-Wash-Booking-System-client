@@ -1,9 +1,20 @@
 import { Card } from "@/components/ui/card";
+import { useDeleteSingleMyBookingMutation } from "@/redux/features/booking/booking";
 import { TBooking } from "@/types/ServiceType";
+import { toast } from "sonner";
 
 const CardPage = ({ bookings }: { bookings: TBooking[] }) => {
+  const [deleteSingleMyBooking] = useDeleteSingleMyBookingMutation();
+  const handleDelete = async (id: string) => {
+    const result = await deleteSingleMyBooking(id).unwrap();
+    if (result.success) {
+      toast.success("Delete Successfully");
+    } else {
+      toast.error("something went wrong");
+    }
+  };
   return (
-    <div className="relative max-w-sm px-4 py-8 sm:px-6 lg:px-8">
+    <div className="relative lg:max-w-sm px-4 py-8 sm:px-6 lg:px-8">
       <div className="mt-4 space-y-6">
         <ul className="space-y-4">
           {bookings?.map((booking) => (
@@ -44,7 +55,10 @@ const CardPage = ({ bookings }: { bookings: TBooking[] }) => {
                 </div>
 
                 <div className="flex flex-1 items-center justify-end gap-2">
-                  <button className="text-gray-600 transition hover:text-red-600">
+                  <button
+                    onClick={() => handleDelete(booking._id)}
+                    className="text-gray-600 transition hover:text-red-600"
+                  >
                     <span className="sr-only">Remove item</span>
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
