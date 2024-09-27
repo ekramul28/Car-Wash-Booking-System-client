@@ -1,9 +1,33 @@
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { TBooking } from "@/types/ServiceType";
+import { useState, useEffect } from "react";
 
 const CardDetailsPage = ({ bookings }: { bookings: TBooking[] }) => {
+  const [min, setMin] = useState(false);
+
+  // Calculate total price
+  const totalPrice = bookings.reduce((total, booking) => {
+    const price = parseFloat(booking.serviceId.price);
+    return total + price;
+  }, 0);
+
+  // Calculate total duration in minutes
+  const totalMin = bookings.reduce((total, booking) => {
+    const durationInMinutes = parseFloat(booking.serviceId.duration);
+    return total + durationInMinutes;
+  }, 0);
+
+  const totalHoursInDecimal = totalMin / 60;
+
+  useEffect(() => {
+    if (totalMin < 60) {
+      setMin(true);
+    } else {
+      setMin(false);
+    }
+  }, [totalMin]);
+
   return (
     <Card>
       <div className="mt-8 flex justify-center items-center border-t h-[400px] p-5 border-gray-100 pt-8">
@@ -11,47 +35,24 @@ const CardDetailsPage = ({ bookings }: { bookings: TBooking[] }) => {
           <dl className="space-y-0.5 text-sm text-gray-700">
             <div className="flex justify-between">
               <dt>Subtotal</dt>
-              <dd>£250</dd>
+              <dd>$0</dd>
             </div>
 
             <div className="flex justify-between">
               <dt>VAT</dt>
-              <dd>£25</dd>
+              <dd>$0</dd>
             </div>
 
             <div className="flex justify-between">
-              <dt>Discount</dt>
-              <dd>-£20</dd>
+              {min ? <dt>Total Minutes</dt> : <dt>Total Hours</dt>}
+              <dd>{min ? totalMin : totalHoursInDecimal.toFixed(0)}</dd>
             </div>
 
             <div className="flex justify-between text-base font-medium">
               <dt>Total</dt>
-              <dd>£200</dd>
+              <dd>${totalPrice.toFixed(2)}</dd>
             </div>
           </dl>
-
-          <div className="flex justify-end">
-            <Badge
-              variant="secondary"
-              className="inline-flex items-center px-2.5 py-0.5 text-indigo-700"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth="1.5"
-                stroke="currentColor"
-                className="-ml-1 mr-1.5 h-4 w-4"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M16.5 6v.75m0 3v.75m0 3v.75m0 3V18m-9-5.25h5.25M7.5 15h3M3.375 5.25c-.621 0-1.125.504-1.125 1.125v3.026a2.999 2.999 0 010 5.198v3.026c0 .621.504 1.125 1.125 1.125h17.25c.621 0 1.125-.504 1.125-1.125v-3.026a2.999 2.999 0 010-5.198V6.375c0-.621-.504-1.125-1.125-1.125H3.375z"
-                />
-              </svg>
-              <p className="whitespace-nowrap text-xs">2 Discounts Applied</p>
-            </Badge>
-          </div>
 
           <div className="flex justify-end">
             <Button
