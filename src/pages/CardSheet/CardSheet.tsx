@@ -7,20 +7,24 @@ import {
   SheetTitle,
 } from "@/components/ui/sheet";
 import { useDeleteSingleMyBookingMutation } from "@/redux/features/booking/booking";
-import { usePaymentMutation } from "@/redux/features/payment/paymentApi";
+import {
+  useAmrpayPaymentMutation,
+  // usePaymentMutation,
+} from "@/redux/features/payment/paymentApi";
 import { TBooking } from "@/types/ServiceType";
-import { loadStripe } from "@stripe/stripe-js";
+// import { loadStripe } from "@stripe/stripe-js";
 import { toast } from "sonner";
 
 export function CartSheet({
   bookings,
-  userId,
-}: {
+}: // userId,
+{
   bookings: TBooking[];
   userId: string | undefined;
 }) {
-  const [payment, { isLoading }] = usePaymentMutation();
+  // const [payment, { isLoading }] = usePaymentMutation();
   const [deleteSingleMyBooking] = useDeleteSingleMyBookingMutation();
+  const [amrpayPayment, { isLoading }] = useAmrpayPaymentMutation();
 
   // delete function
 
@@ -33,29 +37,53 @@ export function CartSheet({
     }
   };
 
+  const totalPrice = bookings?.reduce((total, booking) => {
+    const price = parseFloat(booking.serviceId.price);
+    return total + price;
+  }, 0);
+
+  const totalMin = bookings?.reduce((total, booking) => {
+    const durationInMinutes = parseFloat(booking.serviceId.duration);
+    return total + durationInMinutes;
+  }, 0);
+
+  const totalHoursInDecimal = totalMin / 60;
   //payment function here
 
-  const handelMakePayment = async () => {
-    const stripe = await loadStripe(
-      "pk_test_51OEnEtL2pc8251OJIpKkvcI0a5dYheFy8fPTEUoGZcKf5ivh3KFiM2V2G7uP0ks4pIL9oViusE7QFpW76DP4I85100LbdwsY0M"
-    );
+  // const handelMakePayment = async () => {
+  //   const stripe = await loadStripe(
+  //     "pk_test_51OEnEtL2pc8251OJIpKkvcI0a5dYheFy8fPTEUoGZcKf5ivh3KFiM2V2G7uP0ks4pIL9oViusE7QFpW76DP4I85100LbdwsY0M"
+  //   );
 
-    const session = await payment({ id: userId });
+  //   const session = await payment({ id: userId });
 
+  //   if (bookings.length === 0) {
+  //     toast.error("No Booking quantity ");
+  //     return;
+  //   }
+
+  //   if (stripe) {
+  //     const result = stripe.redirectToCheckout({
+  //       sessionId: session?.data.data.id,
+  //     });
+  //     console.log(result);
+  //   } else {
+  //     console.error("Stripe is not initialized.");
+  //   }
+  // };
+
+  const handelPayment = async () => {
     if (bookings.length === 0) {
       toast.error("No Booking quantity ");
       return;
     }
-
-    console.log(session);
-    console.log(session?.data.data.id);
-    if (stripe) {
-      const result = stripe.redirectToCheckout({
-        sessionId: session?.data.data.id,
-      });
-      console.log(result);
-    } else {
-      console.error("Stripe is not initialized.");
+    const result = await amrpayPayment({
+      totalPrice,
+      totalHoursInDecimal,
+    }).unwrap();
+    if (result.success) {
+      console.log("result", result.data.payment_url);
+      window.location.href = result?.data?.payment_url;
     }
   };
 
@@ -136,7 +164,7 @@ export function CartSheet({
 
             <div className="space-y-4 text-center ">
               <Button
-                onClick={handelMakePayment}
+                onClick={handelPayment}
                 className="px-5 py-3 lock rounded w-[80%] text-center text-sm text-gray-100 transition hover:bg-gray-600"
               >
                 {isLoading ? "Loading..." : "Pay Now"}
