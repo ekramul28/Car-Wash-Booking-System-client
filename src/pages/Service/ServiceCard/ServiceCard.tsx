@@ -47,10 +47,12 @@ const ProductCard: React.FC<TService> = ({
     description: string;
   }
   const user = useAppSelector(selectCurrentUser);
+  console.log(user);
   const [stateDate, setDate] = useState<Date | undefined>(new Date());
-  const [startTime, setStartTime] = useState<string>("");
-  const [endTime, setEndTime] = useState<string>("");
-
+  const [startTime, setStartTime] = useState<string>("09:00");
+  const [endTime, setEndTime] = useState<string>("19:00");
+  console.log(startTime);
+  console.log(endTime);
   const navigate = useNavigate();
 
   const [createSlots, { isLoading }] = useCreateSlotsMutation();
@@ -70,10 +72,11 @@ const ProductCard: React.FC<TService> = ({
       endTime,
     };
     const result = await createSlots(slotData).unwrap();
+
+    console.log("createslote", result);
     if (result?.success) {
       toast.success("slot Create SuccessFull");
     }
-    console.log(slotData);
   };
 
   const onSubmit = async (data: ServiceFormData) => {
@@ -175,6 +178,7 @@ const ProductCard: React.FC<TService> = ({
                       id="startTime"
                       type="time"
                       value={startTime}
+                      defaultValue={startTime}
                       onChange={(e) => setStartTime(e.target.value)}
                       className="col-span-3"
                     />
@@ -185,6 +189,7 @@ const ProductCard: React.FC<TService> = ({
                       id="endTime"
                       type="time"
                       value={endTime}
+                      defaultValue={endTime}
                       onChange={(e) => setEndTime(e.target.value)}
                       className="col-span-3"
                     />

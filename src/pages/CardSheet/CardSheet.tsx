@@ -1,3 +1,4 @@
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import {
@@ -6,11 +7,13 @@ import {
   SheetHeader,
   SheetTitle,
 } from "@/components/ui/sheet";
+import { selectCurrentUser } from "@/redux/features/auth/authSlice";
 import { useDeleteSingleMyBookingMutation } from "@/redux/features/booking/booking";
 import {
   useAmrpayPaymentMutation,
   // usePaymentMutation,
 } from "@/redux/features/payment/paymentApi";
+import { useAppSelector } from "@/redux/hooks";
 import { TBooking } from "@/types/ServiceType";
 // import { loadStripe } from "@stripe/stripe-js";
 import { toast } from "sonner";
@@ -25,7 +28,7 @@ export function CartSheet({
   // const [payment, { isLoading }] = usePaymentMutation();
   const [deleteSingleMyBooking] = useDeleteSingleMyBookingMutation();
   const [amrpayPayment, { isLoading }] = useAmrpayPaymentMutation();
-
+  const user = useAppSelector(selectCurrentUser);
   // delete function
 
   const handleDelete = async (id: string) => {
@@ -79,8 +82,11 @@ export function CartSheet({
     }
     const result = await amrpayPayment({
       totalPrice,
+      user,
       totalHoursInDecimal,
     }).unwrap();
+
+    console.log(result);
     if (result.success) {
       console.log("result", result.data.payment_url);
       window.location.href = result?.data?.payment_url;
@@ -109,11 +115,30 @@ export function CartSheet({
                   />
 
                   <div>
-                    <h3 className="text-sm text-gray-900">
-                      {booking?.serviceId?.title}
-                    </h3>
+                    <h3 className="text-sm text-gray-900 flex gap-3">
+                      <p className="w-5/6">{booking?.serviceId?.title}</p>
 
+                      <dd className="w-1/6">
+                        {booking?.payment === "nonPaid" ? (
+                          <Badge variant="destructive">UnPaid</Badge>
+                        ) : (
+                          <Badge className="bg-green-500">Paid</Badge>
+                        )}
+                      </dd>
+                    </h3>
                     <dl className="mt-0.5 space-y-px text-[10px] text-gray-600">
+                      <div>
+                        <dt className="inline">Status:</dt>
+                        <dd
+                          className={`inline ${
+                            booking?.status === "pending"
+                              ? "text-red-500"
+                              : "text-green-500"
+                          }  uppercase font-bold`}
+                        >
+                          {booking?.status}
+                        </dd>
+                      </div>
                       <div>
                         <dt className="inline">Price:</dt>
                         <dd className="inline">{booking?.serviceId?.price}$</dd>

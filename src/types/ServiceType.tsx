@@ -33,6 +33,8 @@ export type TBooking = {
   serviceId: TService;
   slotId: TSlot;
   date: string;
+  payment: string;
+  status: string;
   startTime: string;
   endTime: string;
   isDeleted: boolean;

@@ -38,7 +38,6 @@ type ServiceDetailsCardProps = {
 
 const ServiceDetailsCardDialog: React.FC<ServiceDetailsCardProps> = ({
   serviceDetails,
-  role,
 }) => {
   const user = useAppSelector(selectCurrentUser);
   const [bookingSlots, { isLoading }] = useBookingSlotsMutation();
@@ -141,7 +140,7 @@ const ServiceDetailsCardDialog: React.FC<ServiceDetailsCardProps> = ({
       </div>
       {/* Book This Service button */}
       <div>
-        {selectedSlot && role === "user" ? (
+        {!!selectedSlot && user?.role === "user" ? (
           <>
             <Button
               className="bg-black text-white px-6 py-2 rounded-full hover:bg-gray-600 transition duration-300 mt-6 md:10 "

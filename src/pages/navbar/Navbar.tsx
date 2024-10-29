@@ -65,7 +65,7 @@ const Navbar = () => {
             <div className="flex items-center gap-4">
               <div className="relative flex justify-center items-center">
                 {/* Badge to show the number 5 */}
-                {bookings?.length > 0 ? (
+                {bookings?.length > 0 && user?.role === "user" ? (
                   <div className="absolute -top-3 right-0 bg-red-500 text-white rounded-full text-xs w-4 h-4 flex items-center justify-center">
                     {bookings?.length}
                   </div>

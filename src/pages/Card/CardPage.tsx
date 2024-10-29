@@ -1,3 +1,4 @@
+import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
 import { useDeleteSingleMyBookingMutation } from "@/redux/features/booking/booking";
 import { TBooking } from "@/types/ServiceType";
@@ -29,11 +30,31 @@ const CardPage = ({ bookings }: { bookings: TBooking[] }) => {
                 />
 
                 <div>
-                  <h3 className="text-sm text-gray-900">
-                    {booking?.serviceId?.title}
+                  <h3 className="text-sm text-gray-900 flex gap-3">
+                    <p className="w-5/6">{booking?.serviceId?.title}</p>
+
+                    <dd className="w-1/6">
+                      {booking?.payment === "nonPaid" ? (
+                        <Badge variant="destructive">UnPaid</Badge>
+                      ) : (
+                        <Badge className="bg-green-500">Paid</Badge>
+                      )}
+                    </dd>
                   </h3>
 
                   <dl className="mt-0.5 space-y-px text-[10px] text-gray-600">
+                    <div>
+                      <dt className="inline">Status:</dt>
+                      <dd
+                        className={`inline ${
+                          booking?.status === "pending"
+                            ? "text-red-500"
+                            : "text-green-500"
+                        }  uppercase font-bold`}
+                      >
+                        {booking?.status}
+                      </dd>
+                    </div>
                     <div>
                       <dt className="inline">Price:</dt>
                       <dd className="inline">{booking?.serviceId?.price}$</dd>

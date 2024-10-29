@@ -30,7 +30,7 @@ const Service = () => {
     name: string;
     value: string | undefined;
   }>({
-    name: "title",
+    name: "",
     value: "",
   });
   const [sort, setSort] = useState<{ name: string; value: string | undefined }>(
@@ -43,7 +43,7 @@ const Service = () => {
   // Adjusted API call for better parameter passing
   const { data, isError } = useGetServiceQuery([
     searchTerm,
-    // filter,
+    filter,
     pagination,
     sort,
   ]);

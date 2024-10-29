@@ -34,7 +34,7 @@ const FunctionalityComponent: React.FC<FunctionalityComponentProps> = ({
   };
 
   const handleFilterChange = (value: string) => {
-    setFilter((prev) => ({ ...prev, value }));
+    setFilter({ name: "title", value });
   };
 
   const handleSortChange = (value: string) => {
@@ -42,7 +42,7 @@ const FunctionalityComponent: React.FC<FunctionalityComponentProps> = ({
   };
   const handleAllData = () => {
     setSearch((prev) => ({ ...prev, value: "" }));
-    setFilter((prev) => ({ ...prev, value: undefined }));
+    setFilter((prev) => ({ ...prev, value: "" }));
     setSort((prev) => ({ ...prev, value: "" }));
   };
   return (
@@ -79,7 +79,6 @@ const FunctionalityComponent: React.FC<FunctionalityComponentProps> = ({
               Interior Cleaning
             </SelectItem>
             <SelectItem value="Tire Cleaning">Tire Cleaning</SelectItem>
-            <SelectItem value="full">Full Service</SelectItem>
           </SelectContent>
         </Select>
       </div>
