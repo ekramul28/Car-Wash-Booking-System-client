@@ -221,7 +221,7 @@ const Footer = () => {
 
                 <li>
                   <a
-                    className="group flex justify-center gap-1.5 ltr:sm:justify-start rtl:sm:justify-end"
+                    className="group flex  gap-1.5 ltr:sm:justify-start rtl:sm:justify-end"
                     href="#"
                   >
                     <span className=" transition group-hover:text-gray-200/75">

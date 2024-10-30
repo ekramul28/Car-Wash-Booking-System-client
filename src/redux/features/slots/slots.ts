@@ -7,6 +7,7 @@ const SlotsApi = baseApi.injectEndpoints({
         url: `/slots/availability?serviceId=${userInfo.serviceId}&date=${userInfo?.date}`,
         method: "GET",
       }),
+      providesTags: ["Slot"],
     }),
     createSlots: builder.mutation({
       query: (userInfo) => ({
@@ -14,6 +15,7 @@ const SlotsApi = baseApi.injectEndpoints({
         method: "POST",
         body: userInfo,
       }),
+      invalidatesTags: ["Slot"],
     }),
     bookingSlots: builder.mutation({
       query: (userInfo) => ({

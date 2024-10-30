@@ -41,7 +41,7 @@ const FunctionalityComponent: React.FC<FunctionalityComponentProps> = ({
   };
   const handleAllData = () => {
     setSearch((prev) => ({ ...prev, value: "" }));
-    setFilter((prev) => ({ ...prev, value: "" }));
+    setFilter({ name: "", value: "" });
     setSort((prev) => ({ ...prev, value: "" }));
   };
   return (

@@ -51,28 +51,6 @@ export function CartSheet({
   }, 0);
 
   const totalHoursInDecimal = totalMin / 60;
-  //payment function here
-
-  // const handelMakePayment = async () => {
-  //   const stripe = await loadStripe(
-  //     "pk_test_51OEnEtL2pc8251OJIpKkvcI0a5dYheFy8fPTEUoGZcKf5ivh3KFiM2V2G7uP0ks4pIL9oViusE7QFpW76DP4I85100LbdwsY0M"
-  //   );
-
-  //   const session = await payment({ id: userId });
-
-  //   if (bookings.length === 0) {
-  //     toast.error("No Booking quantity ");
-  //     return;
-  //   }
-
-  //   if (stripe) {
-  //     const result = stripe.redirectToCheckout({
-  //       sessionId: session?.data.data.id,
-  //     });
-  //   } else {
-  //     console.error("Stripe is not initialized.");
-  //   }
-  // };
 
   const handelPayment = async () => {
     if (bookings.length === 0) {

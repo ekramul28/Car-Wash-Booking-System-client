@@ -14,7 +14,7 @@ const WhyChooseUs = () => {
               <h1 className="mt-4 text-xl font-bold text-[#BE123C] sm:text-xl/relaxed">
                 Expert Team
               </h1>
-              <p className="mt-4  text-white sm:text-xl/relaxed">
+              <p className="mt-4  text-white font-bold roboto-light sm:text-xl/relaxed">
                 Our skilled professionals use the latest techniques and
                 high-quality products to ensure your car gets the best care
                 possible
@@ -24,7 +24,7 @@ const WhyChooseUs = () => {
               <h1 className="mt-4 text-xl font-bold text-[#BE123C] sm:text-xl/relaxed">
                 Attention to Detail
               </h1>
-              <p className="mt-4  text-white sm:text-xl/relaxed">
+              <p className="mt-4  text-white font-bold roboto-light sm:text-xl/relaxed">
                 We go the extra mile to ensure every inch of your car is
                 spotless, inside and out.We’re not happy until you are.
               </p>
@@ -33,7 +33,7 @@ const WhyChooseUs = () => {
               <h1 className="mt-4 text-xl font-bold text-[#BE123C] sm:text-xl/relaxed">
                 Convenience
               </h1>
-              <p className="mt-4  text-white sm:text-xl/relaxed">
+              <p className="mt-4  text-white font-bold roboto-light sm:text-xl/relaxed">
                 With flexible service options and quick turnaround times, we
                 make it easy to keep your car looking its best.
               </p>
