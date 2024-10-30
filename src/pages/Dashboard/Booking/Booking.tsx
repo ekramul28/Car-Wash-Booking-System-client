@@ -5,6 +5,7 @@ import {
   CreditCard,
   File,
   ListFilter,
+  MoreHorizontal,
   MoreVertical,
   Truck,
 } from "lucide-react";
@@ -45,8 +46,31 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import {
+  useGetAllBookingQuery,
+  useUpdateBookingMutation,
+} from "@/redux/features/booking/booking";
 
 const Booking = () => {
+  const { data } = useGetAllBookingQuery(undefined);
+  const [updateBooking] = useUpdateBookingMutation();
+  const allBooking = data?.data;
+  console.log(allBooking);
+  const handleCancel = (id: string) => {
+    const data = {
+      id,
+      updateData: { status: "cancel" },
+    };
+    updateBooking(data);
+  };
+  const handleWork = (id: string) => {
+    const data = {
+      id,
+      updateData: { status: "end" },
+    };
+    updateBooking(data);
+  };
+
   return (
     <div>
       <div className="flex flex-col sm:gap-4 sm:py-4 sm:pl-14">
@@ -156,180 +180,113 @@ const Booking = () => {
                     <Table>
                       <TableHeader>
                         <TableRow>
-                          <TableHead>Customer</TableHead>
-                          <TableHead className="hidden sm:table-cell">
-                            Type
-                          </TableHead>
+                          <TableHead>CustomerImg</TableHead>
+                          <TableHead>CustomerEmail</TableHead>
+
                           <TableHead className="hidden sm:table-cell">
                             Status
+                          </TableHead>
+                          <TableHead className="hidden sm:table-cell">
+                            Payment
                           </TableHead>
                           <TableHead className="hidden md:table-cell">
                             Date
                           </TableHead>
-                          <TableHead className="text-right">Amount</TableHead>
+                          {/* <TableHead className="text-right">Amount</TableHead> */}
+                          <TableHead className="text-right"></TableHead>
                         </TableRow>
                       </TableHeader>
                       <TableBody>
-                        <TableRow className="bg-accent">
-                          <TableCell>
-                            <div className="font-medium">Liam Johnson</div>
-                            <div className="hidden text-sm text-muted-foreground md:inline">
-                              liam@example.com
-                            </div>
-                          </TableCell>
-                          <TableCell className="hidden sm:table-cell">
-                            Sale
-                          </TableCell>
-                          <TableCell className="hidden sm:table-cell">
-                            <Badge className="text-xs" variant="secondary">
-                              Fulfilled
-                            </Badge>
-                          </TableCell>
-                          <TableCell className="hidden md:table-cell">
-                            2023-06-23
-                          </TableCell>
-                          <TableCell className="text-right">$250.00</TableCell>
-                        </TableRow>
-                        <TableRow>
-                          <TableCell>
-                            <div className="font-medium">Olivia Smith</div>
-                            <div className="hidden text-sm text-muted-foreground md:inline">
-                              olivia@example.com
-                            </div>
-                          </TableCell>
-                          <TableCell className="hidden sm:table-cell">
-                            Refund
-                          </TableCell>
-                          <TableCell className="hidden sm:table-cell">
-                            <Badge className="text-xs" variant="outline">
-                              Declined
-                            </Badge>
-                          </TableCell>
-                          <TableCell className="hidden md:table-cell">
-                            2023-06-24
-                          </TableCell>
-                          <TableCell className="text-right">$150.00</TableCell>
-                        </TableRow>
-                        <TableRow>
-                          <TableCell>
-                            <div className="font-medium">Noah Williams</div>
-                            <div className="hidden text-sm text-muted-foreground md:inline">
-                              noah@example.com
-                            </div>
-                          </TableCell>
-                          <TableCell className="hidden sm:table-cell">
-                            Subscription
-                          </TableCell>
-                          <TableCell className="hidden sm:table-cell">
-                            <Badge className="text-xs" variant="secondary">
-                              Fulfilled
-                            </Badge>
-                          </TableCell>
-                          <TableCell className="hidden md:table-cell">
-                            2023-06-25
-                          </TableCell>
-                          <TableCell className="text-right">$350.00</TableCell>
-                        </TableRow>
-                        <TableRow>
-                          <TableCell>
-                            <div className="font-medium">Emma Brown</div>
-                            <div className="hidden text-sm text-muted-foreground md:inline">
-                              emma@example.com
-                            </div>
-                          </TableCell>
-                          <TableCell className="hidden sm:table-cell">
-                            Sale
-                          </TableCell>
-                          <TableCell className="hidden sm:table-cell">
-                            <Badge className="text-xs" variant="secondary">
-                              Fulfilled
-                            </Badge>
-                          </TableCell>
-                          <TableCell className="hidden md:table-cell">
-                            2023-06-26
-                          </TableCell>
-                          <TableCell className="text-right">$450.00</TableCell>
-                        </TableRow>
-                        <TableRow>
-                          <TableCell>
-                            <div className="font-medium">Liam Johnson</div>
-                            <div className="hidden text-sm text-muted-foreground md:inline">
-                              liam@example.com
-                            </div>
-                          </TableCell>
-                          <TableCell className="hidden sm:table-cell">
-                            Sale
-                          </TableCell>
-                          <TableCell className="hidden sm:table-cell">
-                            <Badge className="text-xs" variant="secondary">
-                              Fulfilled
-                            </Badge>
-                          </TableCell>
-                          <TableCell className="hidden md:table-cell">
-                            2023-06-23
-                          </TableCell>
-                          <TableCell className="text-right">$250.00</TableCell>
-                        </TableRow>
-                        <TableRow>
-                          <TableCell>
-                            <div className="font-medium">Liam Johnson</div>
-                            <div className="hidden text-sm text-muted-foreground md:inline">
-                              liam@example.com
-                            </div>
-                          </TableCell>
-                          <TableCell className="hidden sm:table-cell">
-                            Sale
-                          </TableCell>
-                          <TableCell className="hidden sm:table-cell">
-                            <Badge className="text-xs" variant="secondary">
-                              Fulfilled
-                            </Badge>
-                          </TableCell>
-                          <TableCell className="hidden md:table-cell">
-                            2023-06-23
-                          </TableCell>
-                          <TableCell className="text-right">$250.00</TableCell>
-                        </TableRow>
-                        <TableRow>
-                          <TableCell>
-                            <div className="font-medium">Olivia Smith</div>
-                            <div className="hidden text-sm text-muted-foreground md:inline">
-                              olivia@example.com
-                            </div>
-                          </TableCell>
-                          <TableCell className="hidden sm:table-cell">
-                            Refund
-                          </TableCell>
-                          <TableCell className="hidden sm:table-cell">
-                            <Badge className="text-xs" variant="outline">
-                              Declined
-                            </Badge>
-                          </TableCell>
-                          <TableCell className="hidden md:table-cell">
-                            2023-06-24
-                          </TableCell>
-                          <TableCell className="text-right">$150.00</TableCell>
-                        </TableRow>
-                        <TableRow>
-                          <TableCell>
-                            <div className="font-medium">Emma Brown</div>
-                            <div className="hidden text-sm text-muted-foreground md:inline">
-                              emma@example.com
-                            </div>
-                          </TableCell>
-                          <TableCell className="hidden sm:table-cell">
-                            Sale
-                          </TableCell>
-                          <TableCell className="hidden sm:table-cell">
-                            <Badge className="text-xs" variant="secondary">
-                              Fulfilled
-                            </Badge>
-                          </TableCell>
-                          <TableCell className="hidden md:table-cell">
-                            2023-06-26
-                          </TableCell>
-                          <TableCell className="text-right">$450.00</TableCell>
-                        </TableRow>
+                        {allBooking?.map((booking) => (
+                          <TableRow key={booking._id} className="bg-accent">
+                            <TableCell>
+                              <img
+                                alt="Product image"
+                                className="aspect-square rounded-md object-cover"
+                                height="64"
+                                src={
+                                  booking?.userId?.imageUrl ||
+                                  "https://dummyimage.com/600x400/cccccc/000000&text=No+Image+Available"
+                                }
+                                width="64"
+                              />
+                            </TableCell>
+
+                            <TableCell className="hidden sm:table-cell">
+                              <div className="hidden text-sm text-muted-foreground md:inline">
+                                {booking?.userId?.email}
+                              </div>
+                            </TableCell>
+
+                            <TableCell className="hidden sm:table-cell">
+                              <Badge
+                                className={`text-xs ${
+                                  booking?.status === "pending"
+                                    ? "bg-red-700"
+                                    : booking?.status === "end"
+                                    ? "bg-blue-400"
+                                    : booking?.status === "cancel"
+                                    ? "bg-yellow-500"
+                                    : "bg-green-600"
+                                } `}
+                              >
+                                {booking?.status}
+                              </Badge>
+                            </TableCell>
+                            <TableCell className="hidden sm:table-cell">
+                              <Badge
+                                className={`text-xs ${
+                                  booking?.payment === "nonPaid"
+                                    ? "bg-red-700"
+                                    : "bg-green-600"
+                                } `}
+                              >
+                                {booking?.payment}
+                              </Badge>
+                            </TableCell>
+                            <TableCell className="hidden md:table-cell">
+                              <dd>date:{booking.date.split("T")[0]}</dd>
+                              <dd>StartTime:{booking?.startTime}</dd>
+                              <dd>EndTime:{booking?.endTime}</dd>
+                            </TableCell>
+                            {/* <TableCell className="text-right">
+                              {booking?.serviceId?.price}$
+                            </TableCell> */}
+
+                            {booking.payment === "paid" ? (
+                              <TableCell>
+                                <DropdownMenu>
+                                  <DropdownMenuTrigger asChild>
+                                    <Button
+                                      aria-haspopup="true"
+                                      size="icon"
+                                      variant="ghost"
+                                    >
+                                      <MoreHorizontal className="h-4 w-4" />
+                                      <span className="sr-only">
+                                        Toggle menu
+                                      </span>
+                                    </Button>
+                                  </DropdownMenuTrigger>
+                                  <DropdownMenuContent align="end">
+                                    <DropdownMenuItem
+                                      onClick={() => handleWork(booking?._id)}
+                                    >
+                                      WorkEnd
+                                    </DropdownMenuItem>
+                                    <DropdownMenuItem
+                                      onClick={() => handleCancel(booking?._id)}
+                                    >
+                                      Cancel
+                                    </DropdownMenuItem>
+                                  </DropdownMenuContent>
+                                </DropdownMenu>
+                              </TableCell>
+                            ) : (
+                              <TableCell></TableCell>
+                            )}
+                          </TableRow>
+                        ))}
                       </TableBody>
                     </Table>
                   </CardContent>
