@@ -38,7 +38,6 @@ const Register = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const onSubmit = async (data: any) => {
-    console.log("Form Data:", data);
     setRegisterError("");
     const photoFile = data?.image;
 
@@ -52,9 +51,7 @@ const Register = () => {
         password: data.password,
         imageUrl,
       };
-      console.log(createUserData);
       const userCreate = await createUser(createUserData);
-      console.log(userCreate);
       if (userCreate?.error) {
         setRegisterError((userCreate?.error as any)?.data?.message);
         console.log(userCreate?.error);

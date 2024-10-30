@@ -29,7 +29,6 @@ const FunctionalityComponent: React.FC<FunctionalityComponentProps> = ({
   setSort,
 }) => {
   const handleSearchChange = (data: any) => {
-    console.log(data);
     setSearch((prev) => ({ ...prev, value: data?.search }));
   };
 

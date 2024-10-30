@@ -39,7 +39,6 @@ const Service = () => {
       value: "",
     }
   );
-  console.log(filter);
   // Adjusted API call for better parameter passing
   const { data, isError } = useGetServiceQuery([
     searchTerm,
@@ -47,7 +46,6 @@ const Service = () => {
     pagination,
     sort,
   ]);
-  console.log(data);
   const services: TService[] = data?.data?.result || [];
   const meta: TMeta = data?.data?.meta;
 

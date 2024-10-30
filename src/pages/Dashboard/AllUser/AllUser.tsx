@@ -33,13 +33,13 @@ import {
   useGetAllUserQuery,
   useUpdateUserMutation,
 } from "@/redux/features/user/user";
+import { User } from "@/types/ServiceType";
 
 const AllUser = () => {
   const { data } = useGetAllUserQuery(undefined);
-  const [UpdateUser, { data: updatData }] = useUpdateUserMutation();
+  const [UpdateUser] = useUpdateUserMutation();
   const AllUserFromDb = data?.data;
-  console.log(AllUserFromDb);
-  console.log({ updatData });
+
   const handleAdmin = (id: string) => {
     const data = {
       id,
@@ -149,7 +149,7 @@ const AllUser = () => {
                         </TableHead>
                       </TableRow>
                     </TableHeader>
-                    {AllUserFromDb?.map((user) => (
+                    {AllUserFromDb?.map((user: User) => (
                       <TableBody key={user._id}>
                         <TableRow>
                           <TableCell className="hidden sm:table-cell">

@@ -9,10 +9,8 @@ const ServiceDetailsPage = ({
   role?: string;
 }) => {
   // const { id } = useParams();
-  console.log(id);
   const { data } = useGetSingleServiceQuery(id);
   const service = data?.data;
-  console.log(service);
 
   return (
     <div>

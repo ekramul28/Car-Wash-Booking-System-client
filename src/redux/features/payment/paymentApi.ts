@@ -4,7 +4,6 @@ const PaymentApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     payment: builder.mutation({
       query: (data) => {
-        console.log({ api: data });
         return {
           url: "payment/Create-checkout-session",
           method: "POST",
@@ -14,7 +13,6 @@ const PaymentApi = baseApi.injectEndpoints({
     }),
     amrpayPayment: builder.mutation({
       query: (data) => {
-        console.log({ api: data });
         return {
           url: "payment/amrPay",
           method: "POST",

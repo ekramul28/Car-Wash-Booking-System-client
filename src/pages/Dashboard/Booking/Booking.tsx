@@ -50,12 +50,12 @@ import {
   useGetAllBookingQuery,
   useUpdateBookingMutation,
 } from "@/redux/features/booking/booking";
+import { TBooking } from "@/types/ServiceType";
 
 const Booking = () => {
   const { data } = useGetAllBookingQuery(undefined);
   const [updateBooking] = useUpdateBookingMutation();
   const allBooking = data?.data;
-  console.log(allBooking);
   const handleCancel = (id: string) => {
     const data = {
       id,
@@ -197,7 +197,7 @@ const Booking = () => {
                         </TableRow>
                       </TableHeader>
                       <TableBody>
-                        {allBooking?.map((booking) => (
+                        {allBooking?.map((booking: TBooking) => (
                           <TableRow key={booking._id} className="bg-accent">
                             <TableCell>
                               <img

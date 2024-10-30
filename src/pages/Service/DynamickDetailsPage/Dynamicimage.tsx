@@ -1,7 +1,6 @@
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Carousel } from "react-responsive-carousel";
 const DynamicImage = ({ image }: { image: string[] }) => {
-  console.log("ok", image);
   return (
     <Carousel showThumbs={false} infiniteLoop useKeyboardArrows autoPlay>
       {image?.map((imgSrc, index) => (

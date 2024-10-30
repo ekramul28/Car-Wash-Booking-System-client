@@ -11,6 +11,7 @@ const CardDetailsPage = ({ bookings }: { bookings: TBooking[] }) => {
   const [amrpayPayment, { isLoading }] = useAmrpayPaymentMutation();
   const [min, setMin] = useState(false);
   const user = useAppSelector(selectCurrentUser);
+
   // Calculate total price
   const totalPrice = bookings?.reduce((total, booking) => {
     const price = parseFloat(booking.serviceId.price);
@@ -48,7 +49,6 @@ const CardDetailsPage = ({ bookings }: { bookings: TBooking[] }) => {
     const result = await amrpayPayment(data).unwrap();
 
     if (result.success) {
-      console.log("result", result.data.payment_url);
       window.location.href = result?.data?.payment_url;
     }
   };

@@ -58,3 +58,18 @@ export type TMeta = {
   total: number;
   totalPage: number;
 };
+
+export type User = {
+  _id: string;
+  name: string;
+  email: string;
+  password: string;
+  phone: string;
+  role: "user" | "admin";
+  imageUrl: string; // Assuming role can be either "user" or "admin"
+  address: string;
+  isDeleted: boolean;
+  userStatus: "in-progress" | "block" | "inactive"; // Assuming userStatus could have additional statuses
+  createdAt: string; // Date as ISO string
+  updatedAt: string; // Date as ISO string
+};

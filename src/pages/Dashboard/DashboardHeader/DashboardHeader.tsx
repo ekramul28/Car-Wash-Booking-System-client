@@ -22,7 +22,6 @@ import { Link, useLocation } from "react-router-dom";
 const DashboardHeader = () => {
   const user = useAppSelector(selectCurrentUser);
   const dispatch = useAppDispatch();
-  console.log(user);
   const handelLogout = () => {
     dispatch(logout());
   };
@@ -35,8 +34,6 @@ const DashboardHeader = () => {
         {pathnames.map((value, index) => {
           const to = `/${pathnames.slice(0, index + 1).join("/")}`;
           const isLast = index === pathnames.length - 1;
-          console.log({ to });
-          console.log({ isLast });
 
           return (
             <BreadcrumbItem key={to}>

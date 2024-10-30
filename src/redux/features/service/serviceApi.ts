@@ -18,7 +18,6 @@ const ServiceApi = baseApi.injectEndpoints({
     getService: builder.query({
       query: (args) => {
         const params = new URLSearchParams();
-        console.log({ args });
         if (args) {
           args.forEach((item: TQueryParam) => {
             params.append(item.name, item.value as string);
@@ -35,7 +34,6 @@ const ServiceApi = baseApi.injectEndpoints({
 
     UpdateService: builder.mutation({
       query: (userInfo) => {
-        console.log("api", userInfo);
         return {
           url: `/services/${userInfo._id}`,
           method: "PUT",

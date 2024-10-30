@@ -69,7 +69,6 @@ export function CartSheet({
   //     const result = stripe.redirectToCheckout({
   //       sessionId: session?.data.data.id,
   //     });
-  //     console.log(result);
   //   } else {
   //     console.error("Stripe is not initialized.");
   //   }
@@ -86,9 +85,7 @@ export function CartSheet({
       totalHoursInDecimal,
     }).unwrap();
 
-    console.log(result);
     if (result.success) {
-      console.log("result", result.data.payment_url);
       window.location.href = result?.data?.payment_url;
     }
   };

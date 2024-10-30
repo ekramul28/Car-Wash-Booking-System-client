@@ -22,14 +22,12 @@ const Login = () => {
   };
 
   const onSubmit = async (data: any) => {
-    console.log(data);
     try {
       const userInfo = {
         email: data.email,
         password: data.password,
       };
       const res = await login(userInfo).unwrap();
-      console.log(res);
       const user = verifyToken(res.data.accessToken) as TUser;
       dispatch(setUser({ user: user, token: res.data.accessToken }));
       toast.success("Logged in");
@@ -49,7 +47,6 @@ const Login = () => {
         password: "Ekramul28",
       };
       const res = await login(data).unwrap();
-      console.log(res);
       const user = verifyToken(res.data.accessToken) as TUser;
       dispatch(setUser({ user: user, token: res.data.accessToken }));
       toast.success("Logged in");
@@ -67,7 +64,6 @@ const Login = () => {
         password: "Ekramul28",
       };
       const res = await login(data).unwrap();
-      console.log(res);
       const user = verifyToken(res.data.accessToken) as TUser;
       dispatch(setUser({ user: user, token: res.data.accessToken }));
       toast.success("Logged in");

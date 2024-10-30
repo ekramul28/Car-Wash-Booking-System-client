@@ -36,7 +36,6 @@ const EditService: React.FC<ServiceFormProps> = ({
       ...defaultValues,
       image: imageInput.split(",").map((url) => url.trim()), // Split and trim the input
     };
-    console.log(formDataImg);
     onSubmit({ ...data, message, formDataImg });
   };
 

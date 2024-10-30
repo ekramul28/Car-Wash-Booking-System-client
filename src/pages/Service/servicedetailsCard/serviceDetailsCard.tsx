@@ -47,8 +47,7 @@ const ServiceDetailsCardDialog: React.FC<ServiceDetailsCardProps> = ({
   const [selectedSlot, setSelectedSlot] = useState<TSlotData | null>(null);
 
   const formattedDate = date?.toISOString().slice(0, 10);
-  console.log(formattedDate);
-  console.log({ formattedDate });
+
   const userInfo = { serviceId: serviceDetails?._id, date: formattedDate };
 
   // slots data fetch
